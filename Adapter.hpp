@@ -3,6 +3,7 @@
 
 #include<string>
 
+
 #include "json/json.h"
 
 using namespace std;
@@ -21,6 +22,7 @@ class Adapter{
 };
 
 class FacebookAdapter :public Adapter{
+	//type...
 	private:
 		string accessToken;
 		char tmpFileName[500];
@@ -28,6 +30,7 @@ class FacebookAdapter :public Adapter{
 		FacebookAdapter(string in_accessToken);
 		void getMyJson(string type, Json::Value& theJson);
 		void getHisJson(string type, string hisID, Json::Value& theJson);
+		void getNextJson(string url, Json::Value& theJson);
 };
 /*
 class TwitterAdapter:public Adapter{

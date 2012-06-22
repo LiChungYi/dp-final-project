@@ -8,28 +8,27 @@ int main(int argc, char* argv[]){
 
 
 	FacebookData facebookData(argv[1]);
-	cout <<	facebookData.getMyID() << endl; 
+	cout <<	"myID is: " << facebookData.getMyID() << endl; 
 	vector<string> idList = facebookData.getMyFriendIDList();
-	for(unsigned i = 0; i < idList.size(); ++i){
+	cout << "number of friends = " << idList.size() << endl;
+
+	vector<string> post = facebookData.getHisPostList("1422131686");
+	cout << "number of posts = " <<  post.size() << endl;
+
+
+	ofstream file("posts.txt");
+	for(unsigned i =0 ; i < post.size(); ++i)
+		file<<post.at(i)<<endl;
+
+	//TODO:
+	//speedup
+	//map function?? <= pattern?
+	//search ? <= bridge??
+
+/*	for(unsigned i = 0; i < idList.size(); ++i){
 		cout << idList.at(i) << endl;
 	}
+*/
 
-	facebookData.getHisPostList("348900326");
-
-/*
-	FacebookAdapter* facebookAdapter = new FacebookAdapter(argv[1]);
-	Json::Value friendList;
-	facebookAdapter->getMyJson("friends", friendList);
-
-	printf("# friends %d\n", friendList["data"].size());
-
-
-	/**
-	for(unsigned i = 0; i < friendList["data"].size(); ++i){
-		cout << "id = " << friendList["data"][i]["id"] << endl;
-	}**/
-
-	Json::Value tmp;
-	//facebookAdapter->getMyJson("feed", tmp);
 	return 0;
 }

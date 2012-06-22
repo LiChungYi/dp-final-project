@@ -15,20 +15,36 @@ void FacebookAdapter::getMyJson(string type, Json::Value& theJson){
 	char cmd[1000];
 	sprintf(cmd, "rm -rf %s", tmpFileName);
 	system(cmd);
-	sprintf(cmd, "php ./fetch_data.php %s %s me %s", accessToken.c_str(), type.c_str(), tmpFileName);
+	sprintf(cmd, "php ./fetch_FBdata.php %s %s me %s", accessToken.c_str(), type.c_str(), tmpFileName);
 	system(cmd);
 
-	ifstream file(tmpFileName);
-	file>> theJson;
+	ifstream tmpFile(tmpFileName);
+	tmpFile>> theJson;
+	tmpFile.close();
 }
 
 void FacebookAdapter::getHisJson(string type, string hisID, Json::Value& theJson){
 	char cmd[500];
 	sprintf(cmd, "rm -rf %s", tmpFileName);
 	system(cmd);
-	sprintf(cmd, "php ./fetch_data.php %s %s %s %s", accessToken.c_str(), type.c_str(), hisID.c_str(), tmpFileName);
+	sprintf(cmd, "php ./fetch_FBdata.php %s %s %s %s", accessToken.c_str(), type.c_str(), hisID.c_str(), tmpFileName);
 	system(cmd);
 
-	ifstream file(tmpFileName);
-	file>> theJson;
+	ifstream tmpFile(tmpFileName);
+	tmpFile>> theJson;
 }
+void FacebookAdapter::getNextJson(string url, Json::Value& theJson){//move up to static and resued by twitter?
+	ofstream output(tmpFileName, ios_base::out | ios_base::trunc);
+	output << url;
+	output.close();
+
+	//php
+	char cmd[500];
+	sprintf(cmd, "php ./myWget.php %s %s", tmpFileName, tmpFileName);
+	system(cmd);
+
+	ifstream tmpFile(tmpFileName);
+	tmpFile >> theJson;
+}
+
+

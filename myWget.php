@@ -1,0 +1,12 @@
+<?php 
+
+$inputFile=$argv[1];
+$outputFile=$argv[2];
+
+$url=file_get_contents($inputFile);
+
+$json = file_get_contents($url);
+$fp = fopen($outputFile,"w");
+fprintf($fp,"%s",$json);
+fclose($fp);
+?>

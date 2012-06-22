@@ -25,8 +25,15 @@ class FacebookData{
 			faceboookAdapter.getMyJson("friends", theJson);
 			
 			vector<string> ret;
-			for(unsigned i = 0; i < theJson["data"].size(); ++i){
-				ret.push_back(theJson["data"][i]["id"].asString());
+			while(1){
+				for(unsigned i = 0; i < theJson["data"].size(); ++i){
+					ret.push_back(theJson["data"][i]["id"].asString());
+				}
+				theJson = theJson["paging"]["next"];
+				if(theJson.isNull())
+					break;
+				string url = theJson.asString();
+				faceboookAdapter.getNextJson(url, theJson);
 			}
 			return ret;
 		}
@@ -37,8 +44,15 @@ class FacebookData{
 			faceboookAdapter.getMyJson("friends", theJson);
 			
 			vector<string> ret;
-			for(unsigned i = 0; i < theJson["data"].size(); ++i){
-				ret.push_back(theJson["data"][i]["name"].asString());
+			while(1){
+				for(unsigned i = 0; i < theJson["data"].size(); ++i){
+					ret.push_back(theJson["data"][i]["name"].asString());
+				}
+				theJson = theJson["paging"]["next"];
+				if(theJson.isNull())
+					break;
+				string url = theJson.asString();
+				faceboookAdapter.getNextJson(url, theJson);
 			}
 			return ret;
 		}
@@ -48,10 +62,17 @@ class FacebookData{
 			Json::Value theJson;
 			faceboookAdapter.getHisJson("feed", id, theJson);
 		
-			for(unsigned i = 0; i < theJson["data"].size(); ++i)
-				cout << theJson["data"][i]["message"]<<endl;
-
 			vector<string> ret;
+			while(1){
+				for(unsigned i = 0; i < theJson["data"].size(); ++i){
+					ret.push_back(theJson["data"][i]["message"].asString());
+				}
+				theJson = theJson["paging"]["next"];
+				if(theJson.isNull())
+					break;
+				string url = theJson.asString();
+				faceboookAdapter.getNextJson(url, theJson);
+			}
 			return ret;
 		}
 
