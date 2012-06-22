@@ -17,7 +17,7 @@ using namespace std;
 class Adapter{
 	public:
 		virtual void getMyJson(string type, Json::Value& theJson) = 0;
-		virtual void getOthersJson(string type, int hisID, Json::Value& theJson) = 0;
+		virtual void getHisJson(string type, string hisID, Json::Value& theJson) = 0;
 };
 
 class FacebookAdapter :public Adapter{
@@ -27,13 +27,11 @@ class FacebookAdapter :public Adapter{
 	public:
 		FacebookAdapter(string in_accessToken);
 		void getMyJson(string type, Json::Value& theJson);
-		void getOthersJson(string type, int hisID, Json::Value& theJson);
+		void getHisJson(string type, string hisID, Json::Value& theJson);
 };
 /*
 class TwitterAdapter:public Adapter{
 	public:
-		virtual void getFriendList(){}
-		virtual void getJson(string s){}
 
 };
 

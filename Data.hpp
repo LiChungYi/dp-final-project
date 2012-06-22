@@ -43,6 +43,18 @@ class FacebookData{
 			return ret;
 		}
 
+
+		vector<string> getHisPostList(string id){
+			Json::Value theJson;
+			faceboookAdapter.getHisJson("feed", id, theJson);
+		
+			for(unsigned i = 0; i < theJson["data"].size(); ++i)
+				cout << theJson["data"][i]["message"]<<endl;
+
+			vector<string> ret;
+			return ret;
+		}
+
 };
 
 
