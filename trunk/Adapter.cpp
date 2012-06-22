@@ -22,11 +22,11 @@ void FacebookAdapter::getMyJson(string type, Json::Value& theJson){
 	file>> theJson;
 }
 
-void FacebookAdapter::getOthersJson(string type, int hisID, Json::Value& theJson){
+void FacebookAdapter::getHisJson(string type, string hisID, Json::Value& theJson){
 	char cmd[500];
 	sprintf(cmd, "rm -rf %s", tmpFileName);
 	system(cmd);
-	sprintf(cmd, "php ./fetch_data.php %s %s %d %s", accessToken.c_str(), type.c_str(), hisID,tmpFileName);
+	sprintf(cmd, "php ./fetch_data.php %s %s %s %s", accessToken.c_str(), type.c_str(), hisID.c_str(), tmpFileName);
 	system(cmd);
 
 	ifstream file(tmpFileName);

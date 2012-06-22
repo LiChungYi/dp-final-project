@@ -9,10 +9,13 @@ int main(int argc, char* argv[]){
 
 	FacebookData facebookData(argv[1]);
 	cout <<	facebookData.getMyID() << endl; 
-	vector<string> idList = facebookData.getMyFriendNameList();
+	vector<string> idList = facebookData.getMyFriendIDList();
 	for(unsigned i = 0; i < idList.size(); ++i){
 		cout << idList.at(i) << endl;
 	}
+
+	facebookData.getHisPostList("348900326");
+
 /*
 	FacebookAdapter* facebookAdapter = new FacebookAdapter(argv[1]);
 	Json::Value friendList;
