@@ -12,7 +12,7 @@ if($functionId > 0){
 	$token = trim(file_get_contents("token.txt"));
 	switch($functionId){
 		case 0:
-			system('./main '.$token, $returnval)
+			system('./main '.$token, $returnval);
 			break;
 		case 1:
 			break;

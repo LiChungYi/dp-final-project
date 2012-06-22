@@ -1,0 +1,41 @@
+#ifndef ADAPTER_HPP
+#define ADAPTER_HPP
+
+#include<string>
+
+#include "json/json.h"
+
+using namespace std;
+
+/*
+ *profile ("")
+ friends
+ feed
+ * */
+
+
+class Adapter{
+	public:
+		virtual void getMyJson(string type, Json::Value& theJson) = 0;
+		virtual void getOthersJson(string type, int hisID, Json::Value& theJson) = 0;
+};
+
+class FacebookAdapter :public Adapter{
+	private:
+		string accessToken;
+		char tmpFileName[500];
+	public:
+		FacebookAdapter(string in_accessToken);
+		void getMyJson(string type, Json::Value& theJson);
+		void getOthersJson(string type, int hisID, Json::Value& theJson);
+};
+/*
+class TwitterAdapter:public Adapter{
+	public:
+		virtual void getFriendList(){}
+		virtual void getJson(string s){}
+
+};
+
+*/
+#endif //ADAPTER_HPP
