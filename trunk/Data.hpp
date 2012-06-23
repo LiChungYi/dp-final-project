@@ -10,6 +10,14 @@
 #include "Post.hpp"
 
 using namespace std;
+class Data{
+	public:
+		virtual string getMyID()=0;
+		virtual vector<string> getMyFriendIDList()=0;
+		virtual User getUserInfo()=0;
+		virtual vector<Post> getHisPostList()=0;
+	
+};
 
 class FacebookData{
 	private:
@@ -106,32 +114,48 @@ class TwitterData{
 		string accessTokenSecret;
 		TwitterAdapter twitterAdapter;
 	public:
+		string getMyID(){
+
+		}
 		TwitterData(string in_accessToken, string in_accessTokenSecret):accessToken(in_accessToken), accessTokenSecret(in_accessTokenSecret),twitterAdapter(in_accessToken,in_accessTokenSecret){}
-		vector<User> getFriendList(){
+
+		
+		vector<string> getMyFriendIDList(){
 			Json::Value theJson;
 			twitterAdapter.getMyJson("friends/ids", theJson);
-			vector<User> ret;
+			vector<string> ret;
 			int i;
 			for(i=0;i<theJson["ids"].size();i++){
 				int ID = theJson["ids"][i].asInt();
-				string s;
-				stringstream ss(s);
-				ss <<ID;
-				User u("",s,"","","","","");
-				ret.push_back(u);	
+				char cs[50];
+				sprintf(cs,"%d",ID);
+				string s(cs);
+				getUserInfo(s);
+				ret.push_back(s);	
 			}
 			return 	ret;
 		}
-		vector<string> getHisPostList(string id){
-			/*Json::Value theJson;
+		User getUserInfo(string id){
+			Json::Value theJson;
+			twitterAdapter.getHisJson("users/show", id, theJson);
+			User u(theJson["name"].asString(),id,"",theJson["lang"].asString(),"","",theJson["location"].asString());
+
+			cout<<u<<endl;
+			return u;
+		}
+		vector<Post> getHisPostList(string id){
+			Json::Value theJson;
 			twitterAdapter.getHisJson("statuses/user_timeline",id, theJson);
-			vector<string> ret;
+			vector<Post> ret;
 			int i;
 			for(i=0;i<theJson.size();i++){
-				//cout<<theJson[i]["text"]<<endl;
-				ret.push_back(theJson[i]["text"].asString());
+				string s = theJson[i]["created_at"].asString();
+				
+				Post p(theJson[i]["id_str"].asString(),theJson[i]["user"]["id_str"].asString(),theJson[i]["text"].asString(),theJson[i]["created_at"].asString(),-1,theJson[i]["place"].asString());
+				
+				//cout<<p<<endl;
 			}
-			return 	ret;*/
+			return 	ret;
 		}
 
 };
