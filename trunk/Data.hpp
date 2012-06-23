@@ -2,10 +2,12 @@
 #define DATA_HPP
 
 #include <iostream>
-#include<sstream>
-#include "Adapter.hpp"
-
+#include <sstream>
 #include <stdlib.h>
+
+#include "Adapter.hpp"
+#include "User.hpp"
+#include "Post.hpp"
 
 using namespace std;
 
@@ -65,22 +67,23 @@ class TwitterData{
 		TwitterAdapter twitterAdapter;
 	public:
 		TwitterData(string in_accessToken, string in_accessTokenSecret):accessToken(in_accessToken), accessTokenSecret(in_accessTokenSecret),twitterAdapter(in_accessToken,in_accessTokenSecret){}
-		vector<string> getMyFriendIDList(){
+		vector<User> getFriendList(){
 			Json::Value theJson;
 			twitterAdapter.getMyJson("friends/ids", theJson);
-			vector<string> ret;
+			vector<User> ret;
 			int i;
 			for(i=0;i<theJson["ids"].size();i++){
 				int ID = theJson["ids"][i].asInt();
 				string s;
 				stringstream ss(s);
 				ss <<ID;
-				ret.push_back(s);	
+				User u("",s,"","","","","");
+				ret.push_back(u);	
 			}
 			return 	ret;
 		}
 		vector<string> getHisPostList(string id){
-			Json::Value theJson;
+			/*Json::Value theJson;
 			twitterAdapter.getHisJson("statuses/user_timeline",id, theJson);
 			vector<string> ret;
 			int i;
@@ -88,7 +91,7 @@ class TwitterData{
 				//cout<<theJson[i]["text"]<<endl;
 				ret.push_back(theJson[i]["text"].asString());
 			}
-			return 	ret;
+			return 	ret;*/
 		}
 
 };
