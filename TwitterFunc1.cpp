@@ -5,18 +5,19 @@
 #include"Adapter.hpp"
 #include"Data.hpp"
 #include"User.hpp"
+#include"Post.hpp"
 
 int main(int argc, char* argv[]){
 
 
 	TwitterData twitterData(argv[1],argv[2]);
-	vector<string> idList = twitterData.getMyFriendIDList();
-	cerr << "number of friends = " << idList.size() << endl;
+	vector<User> userList = twitterData.getFriendList();
+	cerr << "number of friends = " << userList.size() << endl;
 	
 //	cerr << "number of friends = " << idList.size() << endl;
 	
-	vector<string> post = twitterData.getHisPostList("71026122");
-	cerr << "number of posts = " <<  post.size() << endl;
+//	vector<string> post = twitterData.getHisPostList("71026122");
+//	cerr << "number of posts = " <<  post.size() << endl;
 
 
 
