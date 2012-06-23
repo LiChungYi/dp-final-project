@@ -34,9 +34,12 @@ int main(int argc, char* argv[]){
 //		file<<post.at(i)<<endl;
 
 	SearchEngine se(&facebookData);
-	vector<Post> result = se.searchAllPostsOfUser("1422131686");
+	vector<Post> result = se.searchAllPostsOfUser("1422131686", "STORY");
 	for(unsigned i = 0; i < result.size(); ++i)
 		cout << result.at(i);
+
+
+	
 
 	//TODO:
 	//speedup
