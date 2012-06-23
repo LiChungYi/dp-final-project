@@ -8,12 +8,17 @@ int main(int argc, char* argv[]){
 
 
 	FacebookData facebookData(argv[1]);
-	cout <<	"myID is: " << facebookData.getMyID() << endl; 
+	cerr <<	"myID is: " << facebookData.getMyID() << endl; 
 	vector<string> idList = facebookData.getMyFriendIDList();
-	cout << "number of friends = " << idList.size() << endl;
+	cerr << "number of friends = " << idList.size() << endl;
+	vector<string> nameList = facebookData.getMyFriendNameList();
+	for(unsigned i =0 ; i < nameList.size(); ++i)
+		cerr << nameList.at(i)<<endl;
+	cerr << "number of friends = " << nameList.size() << endl;
 
-	vector<string> post = facebookData.getHisPostList("1422131686");
-	cout << "number of posts = " <<  post.size() << endl;
+	//vector<string> post = facebookData.getHisPostList("1422131686");
+	vector<string> post = facebookData.getHisPostList("1744451859");
+	cerr << "number of posts = " <<  post.size() << endl;
 
 
 	ofstream file("posts.txt");
