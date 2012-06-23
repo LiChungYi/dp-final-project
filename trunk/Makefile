@@ -1,9 +1,9 @@
 all:	FBmain TWFunc1
 
 FBmain:	json.o Adapter.o Data.hpp User.hpp Post.hpp
-	g++ FBmain.cpp json.o Adapter.o -o FBmain
+	g++ -O3 FBmain.cpp json.o Adapter.o -o FBmain
 TWFunc1: json.o Adapter.o Data.hpp User.hpp Post.hpp
-	g++ TwitterFunc1.cpp json.o Adapter.o -o TWFunc1
+	g++ -O3 TwitterFunc1.cpp json.o Adapter.o -o TWFunc1
 json.o:
 	g++ -c json.cpp
 Adapter.o:

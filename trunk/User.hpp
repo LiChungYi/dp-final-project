@@ -13,6 +13,6 @@ class User{
 		string relationship;
 		string birthday;
 		string location;
-		User(string name, string id, string gen, string lan, string rela, string birth, string loc):userName(name),ID(id),gender(gen),language(lan),relationship(rela),birthday(birth),location(loc){}
+		User(string name = "", string id = "", string gen = "", string lan = "", string rela = "", string birth = "", string loc = ""):userName(name),ID(id),gender(gen),language(lan),relationship(rela),birthday(birth),location(loc){}
 };
 #endif
