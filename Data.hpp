@@ -59,11 +59,17 @@ class FacebookData{
 
 		User getUserInfo(string userID){
 			Json::Value theJson;
-			faceboookAdapter.getHisJson("", userID, theJson);
+			faceboookAdapter.getHisJson("profile", userID, theJson);
 			User user;
 			user.userName = theJson["name"].asString();
 			user.ID = theJson["id"].asString();
-			
+			user.gender = theJson["gender"].asString();
+			user.language = theJson["locale"].asString();
+			user.relationship = theJson["relationship_status"].asString();
+			user.birthday = theJson["birthday"].asString();
+			user.location = theJson["location"]["name"].asString();
+			cout << user;
+			return user;
 		}
 
 		vector<Post> getHisPostList(string id){
