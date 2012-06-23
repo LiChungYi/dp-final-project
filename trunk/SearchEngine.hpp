@@ -11,7 +11,7 @@ class SearchEngine{
 			vector<Post> postList = data->getHisPostList(userID);
 			vector<Post> result;
 			for(vector<Post>::iterator it = postList.begin(); it != postList.end(); it++){
-				if( (it->content).find("生日") != string::npos )
+				if( (it->content).find("STORY") != string::npos )
 					result.push_back(*it);
 			}
 			return result;

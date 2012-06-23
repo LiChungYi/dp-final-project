@@ -134,7 +134,7 @@ class TwitterData:public Data{
 			Json::Value theJson;
 			twitterAdapter.getMyJson("friends/ids", theJson);
 			vector<string> ret;
-			int i;
+			unsigned i;
 			for(i=0;i<theJson["ids"].size();i++){
 				int ID = theJson["ids"][i].asInt();
 				char cs[50];
@@ -157,7 +157,7 @@ class TwitterData:public Data{
 			Json::Value theJson;
 			twitterAdapter.getHisJson("statuses/user_timeline",id, theJson);
 			vector<Post> ret;
-			int i;
+			unsigned i;
 			for(i=0;i<theJson.size();i++){
 				string s = theJson[i]["created_at"].asString();
 				TwitterTimeParser ttp;

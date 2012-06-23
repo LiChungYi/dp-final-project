@@ -22,19 +22,21 @@ int main(int argc, char* argv[]){
 	facebookData.getUserInfo("1744451859");
 	facebookData.getUserInfo("224171");
 
-	vector<Post> post = facebookData.getHisPostList("1422131686");
+	//vector<Post> post = facebookData.getHisPostList("1422131686");
 	//vector<Post> post = facebookData.getHisPostList("1744451859");
 	//vector<Post> post = facebookData.getHisPostList("224171");
-	cerr << "number of posts = " <<  post.size() << endl;
-	cerr << post.at(0);
+	//cerr << "number of posts = " <<  post.size() << endl;
+	//cerr << post.at(0);
 
 
-	ofstream file("posts.txt");
-	for(unsigned i =0 ; i < post.size(); ++i)
-		file<<post.at(i)<<endl;
+//	ofstream file("posts.txt");
+//	for(unsigned i =0 ; i < post.size(); ++i)
+//		file<<post.at(i)<<endl;
 
 	SearchEngine se(&facebookData);
-	se.searchAllPostsOfUser("224171");
+	vector<Post> result = se.searchAllPostsOfUser("1422131686");
+	for(unsigned i = 0; i < result.size(); ++i)
+		cout << result.at(i);
 
 	//TODO:
 	//speedup
