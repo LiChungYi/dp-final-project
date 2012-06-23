@@ -37,4 +37,30 @@ class PostFromIDFilter:public Filter<Post>{
 			return false;
 		}
 };
+
+
+
+class UserRelationshipFilter:public Filter<User>{
+	private:
+		string relationshipStatus;
+	public:
+		UserRelationshipFilter(string in_relationshipStatus):relationshipStatus(in_relationshipStatus){}
+		virtual bool shouldKeep(User u){
+			if(u.relationshipStatus.compare(relationshipStatus) == 0)
+				return true;
+			return false;
+		}
+};
+
+class UserGenderFilter:public Filter<User>{
+	private:
+		string gender;
+	public:
+		UserGenderFilter(string in_gender):gender(in_gender){}
+		virtual bool shouldKeep(User u){
+			if(u.gender.compare(gender) == 0)
+				return true;
+			return false;
+		}
+};
 #endif //FILTER_HPP
