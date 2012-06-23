@@ -23,6 +23,7 @@ ostream& operator<<(ostream& os, const Post& p){
 	os<<"createdTime : "<<p.createdTime<<endl;
 	os<<"nLIke : "<<p.nLike<<endl;
 	os<<"place : "<<p.place<<endl;
+	return os;
 }
 
 #endif //POST_HPP
