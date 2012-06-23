@@ -1,7 +1,17 @@
-all:
-	g++ main.cpp json.cpp Adapter.cpp -o main
-	g++ TwitterFunc1.cpp json.cpp Adapter.cpp -o TWFunc1
+all:	FBmain TWFunc1
+
+FBmain:	json.o Adapter.o
+	g++ FBmain.cpp json.o Adapter.o -o FBmain
+TWFunc1: json.o Adapter.o
+	g++ TwitterFunc1.cpp json.o Adapter.o -o TWFunc1
+json.o:
+	g++ -c json.cpp
+Adapter.o:
+	g++ -c Adapter.cpp
+
+clean:
+	rm -rf FBmain TWFunc1 *.json *.o 
 FBrun:
-	./main AAADXdx63mRQBAFnoBCvrideHcNlkZCEYcLpm0I5sFWGRi4VGumjoGIB0kP0xKxYNeKUrbeOz2gOo8dw5PuJiNy321fZARHFh8dFAKQTwZDZD
+	./FBmain AAADXdx63mRQBAFnoBCvrideHcNlkZCEYcLpm0I5sFWGRi4VGumjoGIB0kP0xKxYNeKUrbeOz2gOo8dw5PuJiNy321fZARHFh8dFAKQTwZDZD
 TWrun1:
 	./TWFunc1 608052658-rvLLXpJBVxD9hI6Rq7fPsMj0L5tNd0aGaTiWaO55 i6TXxY9HoVGKZaR4BOf9hkve88RR43Cy3fO8UPScU 
