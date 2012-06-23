@@ -12,15 +12,7 @@ FacebookAdapter::FacebookAdapter(string in_accessToken){
 }
 
 void FacebookAdapter::getMyJson(string type, Json::Value& theJson){
-	char cmd[1000];
-	sprintf(cmd, "rm -rf %s", tmpFileName);
-	system(cmd);
-	sprintf(cmd, "php ./fetch_FBdata.php %s %s me %s", accessToken.c_str(), type.c_str(), tmpFileName);
-	system(cmd);
-
-	ifstream tmpFile(tmpFileName);
-	tmpFile>> theJson;
-	tmpFile.close();
+	getHisJson(type, "me", theJson);
 }
 
 void FacebookAdapter::getHisJson(string type, string hisID, Json::Value& theJson){
