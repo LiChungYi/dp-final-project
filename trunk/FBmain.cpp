@@ -39,6 +39,9 @@ int main(int argc, char* argv[]){
 		cout << result.at(i);
 
 
+	vector<User> result2 = se.searchAllMyFriendsByRelationshipStatus("Single");
+	for(unsigned i = 0; i < result2.size(); ++i)
+		cout << result2.at(i);
 	
 
 	//TODO:

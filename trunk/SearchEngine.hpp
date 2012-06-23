@@ -19,9 +19,30 @@ class SearchEngine{
 			
 		}
 
+		//should be modify, here just a simple default method
 		vector<Post> searchAllPostsOfUser(string userID, string userInput){
 			Filter<Post> *f = new PostContentFilter(userInput);
 			return searchAllPostsOfUser(userID, f);
+		}
+
+
+
+		vector<User> searchAllMyFriends(Filter<User> *filter){
+			vector<string> userIDList = data->getMyFriendIDList();
+			vector<User> result;
+			for(vector<string>::iterator it = userIDList.begin(); it != userIDList.end(); it++){
+				User u = data->getUserInfo(*it);
+				if(filter->shouldKeep(u))
+					result.push_back(u);
+			}
+			return result;
+		}
+
+
+		//may be deleted, here just a simple testing method
+		vector<User> searchAllMyFriendsByRelationshipStatus(string status){
+			Filter<User> *f = new UserRelationshipFilter(status);
+			return searchAllMyFriends(f);
 		}
 };
 #endif //SEARCH_ENGINE_HPP

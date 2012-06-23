@@ -74,7 +74,7 @@ class FacebookData:public Data{
 			user.ID = theJson["id"].asString();
 			user.gender = theJson["gender"].asString();
 			user.language = theJson["locale"].asString();
-			user.relationship = theJson["relationship_status"].asString();
+			user.relationshipStatus = theJson["relationship_status"].asString();
 			user.birthday = theJson["birthday"].asString();
 			user.location = theJson["location"]["name"].asString();
 			cout << user;
