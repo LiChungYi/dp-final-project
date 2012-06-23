@@ -25,6 +25,8 @@ int main(int argc, char* argv[]){
 	for(unsigned i =0 ; i < post.size(); ++i)
 		file<<post.at(i)<<endl;
 
+
+
 	//TODO:
 	//speedup
 	//map function?? <= pattern?
