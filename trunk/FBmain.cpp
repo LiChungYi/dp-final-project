@@ -17,6 +17,10 @@ int main(int argc, char* argv[]){
 	cerr << "number of friends = " << nameList.size() << endl;
 */
 
+	facebookData.getUserInfo("1422131686");
+	facebookData.getUserInfo("1744451859");
+	facebookData.getUserInfo("224171");
+
 	//vector<string> post = facebookData.getHisPostList("1422131686");
 	//vector<Post> post = facebookData.getHisPostList("1744451859");
 	vector<Post> post = facebookData.getHisPostList("224171");
