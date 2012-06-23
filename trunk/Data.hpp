@@ -2,6 +2,7 @@
 #define DATA_HPP
 
 #include <iostream>
+#include<sstream>
 #include "Adapter.hpp"
 
 #include <stdlib.h>
@@ -53,6 +54,41 @@ class FacebookData{
 			Json::Value theJson;
 			faceboookAdapter.getHisJson("feed", id, theJson);
 			return getJsonFieldAsVector(theJson, "message");
+		}
+
+};
+
+class TwitterData{
+	private:
+		string accessToken;
+		string accessTokenSecret;
+		TwitterAdapter twitterAdapter;
+	public:
+		TwitterData(string in_accessToken, string in_accessTokenSecret):accessToken(in_accessToken), accessTokenSecret(in_accessTokenSecret),twitterAdapter(in_accessToken,in_accessTokenSecret){}
+		vector<string> getMyFriendIDList(){
+			Json::Value theJson;
+			twitterAdapter.getMyJson("friends/ids", theJson);
+			vector<string> ret;
+			int i;
+			for(i=0;i<theJson["ids"].size();i++){
+				int ID = theJson["ids"][i].asInt();
+				string s;
+				stringstream ss(s);
+				ss <<ID;
+				ret.push_back(s);	
+			}
+			return 	ret;
+		}
+		vector<string> getHisPostList(string id){
+			Json::Value theJson;
+			twitterAdapter.getHisJson("statuses/user_timeline",id, theJson);
+			vector<string> ret;
+			int i;
+			for(i=0;i<theJson.size();i++){
+				//cout<<theJson[i]["text"]<<endl;
+				ret.push_back(theJson[i]["text"].asString());
+			}
+			return 	ret;
 		}
 
 };

@@ -31,11 +31,19 @@ class FacebookAdapter :public Adapter{
 		void getHisJson(string type, string hisID, Json::Value& theJson);
 		void getNextJson(string url, Json::Value& theJson);
 };
-/*
+
 class TwitterAdapter:public Adapter{
+	private:
+		string accessToken;
+		string accessTokenSecret;
+		char tmpFileName[500];
 	public:
+		TwitterAdapter(string in_accessToken, string in_accessTokenSecret);
+		void getMyJson(string type, Json::Value& theJson);
+		void getHisJson(string type, string hisID, Json::Value& theJson);
+		void getNextJson(string url, Json::Value& theJson);
 
 };
 
-*/
+
 #endif //ADAPTER_HPP
