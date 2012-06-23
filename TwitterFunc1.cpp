@@ -1,8 +1,10 @@
 #include<iostream>
 #include<fstream>
 
+
 #include"Adapter.hpp"
 #include"Data.hpp"
+#include"User.hpp"
 
 int main(int argc, char* argv[]){
 
