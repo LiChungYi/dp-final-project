@@ -15,12 +15,12 @@ class Data{
 	public:
 		virtual string getMyID()=0;
 		virtual vector<string> getMyFriendIDList()=0;
-		virtual User getUserInfo()=0;
-		virtual vector<Post> getHisPostList()=0;
+		virtual User getUserInfo(string id)=0;
+		virtual vector<Post> getHisPostList(string id)=0;
 	
 };
 
-class FacebookData{
+class FacebookData:public Data{
 	private:
 		string accessToken;
 		FacebookAdapter faceboookAdapter;
@@ -83,7 +83,7 @@ class FacebookData{
 
 		vector<Post> getHisPostList(string id){
 			Json::Value theJson;
-			faceboookAdapter.getHisJson("feed", id, theJson);
+			faceboookAdapter.getHisJson("posts", id, theJson);
 
 			vector<Post> ret;
 			while(1){
@@ -93,6 +93,9 @@ class FacebookData{
 					p.postID = tmp["id"].asString();
 					p.fromID = tmp["from"]["id"].asString();
 					p.content = tmp["message"].asString();
+					if(tmp["message"].isNull() && !tmp["story"].isNull()){
+						p.content = "STORY: " + tmp["story"].asString();
+					}
 					p.createdTime = tmp["created_time"].asString();
 					p.nLike = tmp["likes"]["count"].asInt();
 					p.place = tmp["place"]["location"]["city"].asString() + ", " + tmp["place"]["location"]["state"].asString() + ", " + tmp["place"]["location"]["country"].asString();
@@ -109,7 +112,7 @@ class FacebookData{
 
 };
 
-class TwitterData{
+class TwitterData:public Data{
 	private:
 		string accessToken;
 		string accessTokenSecret;
