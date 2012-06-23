@@ -16,6 +16,7 @@ class FacebookData{
 		string accessToken;
 		FacebookAdapter faceboookAdapter;
 
+		/*
 		inline vector<string> getJsonFieldAsVector(Json::Value theJson, string fieldName){
 			vector<string> ret;
 			while(1){
@@ -29,7 +30,7 @@ class FacebookData{
 				faceboookAdapter.getNextJson(url, theJson);
 			}
 			return ret;
-		}
+		}*/
 	public:
 		FacebookData(string in_accessToken):accessToken(in_accessToken), faceboookAdapter(in_accessToken){}
 		string getMyID(){
@@ -41,21 +42,45 @@ class FacebookData{
 		vector<string> getMyFriendIDList(){
 			Json::Value theJson;
 			faceboookAdapter.getMyJson("friends", theJson);
-			return getJsonFieldAsVector(theJson, "id");
+
+			vector<string> ret;
+			while(1){
+				for(unsigned  i =0; i < theJson["data"].size(); ++i){
+					ret.push_back(theJson["data"][i]["id"].asString());
+				}
+				theJson = theJson["paging"]["next"];
+				if(theJson.isNull())
+					break;
+				string url = theJson.asString();
+				faceboookAdapter.getNextJson(url, theJson);
+			}
+			return ret;
 		}
 
-		
-		vector<string> getMyFriendNameList(){
-			Json::Value theJson;
-			faceboookAdapter.getMyJson("friends", theJson);
-			return getJsonFieldAsVector(theJson, "name");
+		User getUserInfo(string userID){
+			
 		}
 
-
-		vector<string> getHisPostList(string id){
+		vector<Post> getHisPostList(string id){
 			Json::Value theJson;
 			faceboookAdapter.getHisJson("feed", id, theJson);
-			return getJsonFieldAsVector(theJson, "message");
+
+			vector<Post> ret;
+			while(1){
+				for(unsigned  i =0; i < theJson["data"].size(); ++i){
+
+					Post p;
+					p.content = theJson["data"][i]["message"].asString();
+
+					ret.push_back(p);
+				}
+				theJson = theJson["paging"]["next"];
+				if(theJson.isNull())
+					break;
+				string url = theJson.asString();
+				faceboookAdapter.getNextJson(url, theJson);
+			}
+			return ret;
 		}
 
 };

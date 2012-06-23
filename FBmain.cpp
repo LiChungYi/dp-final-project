@@ -6,8 +6,8 @@
 
 int main(int argc, char* argv[]){
 
-
 	FacebookData facebookData(argv[1]);
+/*
 	cerr <<	"myID is: " << facebookData.getMyID() << endl; 
 	vector<string> idList = facebookData.getMyFriendIDList();
 	cerr << "number of friends = " << idList.size() << endl;
@@ -15,16 +15,23 @@ int main(int argc, char* argv[]){
 	for(unsigned i =0 ; i < nameList.size(); ++i)
 		cerr << nameList.at(i)<<endl;
 	cerr << "number of friends = " << nameList.size() << endl;
+*/
 
 	//vector<string> post = facebookData.getHisPostList("1422131686");
-	vector<string> post = facebookData.getHisPostList("1744451859");
+	vector<Post> post = facebookData.getHisPostList("1744451859");
 	cerr << "number of posts = " <<  post.size() << endl;
+	cerr << post.at(0);
+	cerr << post.at(1);
+	cerr << post.at(2);
+	cerr << post.at(3);
+	cerr << post.at(4);
+	cerr << post.at(5);
+	cerr << post.at(6);
 
 
 	ofstream file("posts.txt");
 	for(unsigned i =0 ; i < post.size(); ++i)
 		file<<post.at(i)<<endl;
-
 
 
 	//TODO:
