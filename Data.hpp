@@ -8,6 +8,7 @@
 #include "Adapter.hpp"
 #include "User.hpp"
 #include "Post.hpp"
+#include "TimeParser.hpp"
 
 using namespace std;
 class Data{
@@ -115,7 +116,13 @@ class TwitterData{
 		TwitterAdapter twitterAdapter;
 	public:
 		string getMyID(){
-
+			Json::Value theJson;
+			twitterAdapter.getMyJson("account/verify_credentials", theJson);
+			
+			char cs[50];
+			sprintf(cs,"%d",theJson["id"].asInt());
+			string s(cs);
+			return s;
 		}
 		TwitterData(string in_accessToken, string in_accessTokenSecret):accessToken(in_accessToken), accessTokenSecret(in_accessTokenSecret),twitterAdapter(in_accessToken,in_accessTokenSecret){}
 
@@ -150,10 +157,11 @@ class TwitterData{
 			int i;
 			for(i=0;i<theJson.size();i++){
 				string s = theJson[i]["created_at"].asString();
-				
-				Post p(theJson[i]["id_str"].asString(),theJson[i]["user"]["id_str"].asString(),theJson[i]["text"].asString(),theJson[i]["created_at"].asString(),-1,theJson[i]["place"].asString());
+				TwitterTimeParser ttp;
+				Post p(theJson[i]["id_str"].asString(),theJson[i]["user"]["id_str"].asString(),theJson[i]["text"].asString(),ttp.Parser(theJson[i]["created_at"].asString()),-1,theJson[i]["place"].asString());
 				
 				//cout<<p<<endl;
+				ret.push_back(p);	
 			}
 			return 	ret;
 		}

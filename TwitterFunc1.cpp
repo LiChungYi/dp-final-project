@@ -11,12 +11,16 @@ int main(int argc, char* argv[]){
 
 
 	TwitterData twitterData(argv[1],argv[2]);
-	vector<string> userList = twitterData.getMyFriendIDList();
-	cerr << "number of friends = " << userList.size() << endl;
+//	string id = twitterData.getMyID();
+//	cout<<id<<endl;
+
+
+//	vector<string> userList = twitterData.getMyFriendIDList();
+//	cerr << "number of friends = " << userList.size() << endl;
 	
 	
-//	vector<Post> post = twitterData.getHisPostList("71026122");
-//	cerr << "number of posts = " <<  post.size() << endl;
+	vector<Post> post = twitterData.getHisPostList("71026122");
+	cerr << "number of posts = " <<  post.size() << endl;
 
 
 
