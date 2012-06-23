@@ -9,9 +9,9 @@ class Post{
 		string fromID;
 		string content;
 		string createdTime;
-		string nLike;
+		int nLike;
 		string place;
-		Post(string in_postID = "", string in_fromID = "", string in_content = "", string in_createdTime = "", string in_nLike= "", string in_place = ""):
+		Post(string in_postID = "", string in_fromID = "", string in_content = "", string in_createdTime = "", int in_nLike= -1, string in_place = ""):
 			postID(in_postID), fromID(in_fromID), content(in_content), createdTime(in_createdTime), nLike(in_nLike), place(in_place){}
 		friend ostream& operator<<(ostream&, const Post&);
 

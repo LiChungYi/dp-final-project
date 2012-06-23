@@ -58,6 +58,11 @@ class FacebookData{
 		}
 
 		User getUserInfo(string userID){
+			Json::Value theJson;
+			faceboookAdapter.getHisJson("", userID, theJson);
+			User user;
+			user.userName = theJson["name"].asString();
+			user.ID = theJson["id"].asString();
 			
 		}
 
@@ -68,10 +73,14 @@ class FacebookData{
 			vector<Post> ret;
 			while(1){
 				for(unsigned  i =0; i < theJson["data"].size(); ++i){
-
 					Post p;
-					p.content = theJson["data"][i]["message"].asString();
-
+					Json::Value tmp = theJson["data"][i];
+					p.postID = tmp["id"].asString();
+					p.fromID = tmp["from"]["id"].asString();
+					p.content = tmp["message"].asString();
+					p.createdTime = tmp["created_time"].asString();
+					p.nLike = tmp["likes"]["count"].asInt();
+					p.place = tmp["place"]["location"]["city"].asString() + ", " + tmp["place"]["location"]["state"].asString() + ", " + tmp["place"]["location"]["country"].asString();
 					ret.push_back(p);
 				}
 				theJson = theJson["paging"]["next"];

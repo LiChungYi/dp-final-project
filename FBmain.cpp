@@ -18,7 +18,8 @@ int main(int argc, char* argv[]){
 */
 
 	//vector<string> post = facebookData.getHisPostList("1422131686");
-	vector<Post> post = facebookData.getHisPostList("1744451859");
+	//vector<Post> post = facebookData.getHisPostList("1744451859");
+	vector<Post> post = facebookData.getHisPostList("224171");
 	cerr << "number of posts = " <<  post.size() << endl;
 	cerr << post.at(0);
 	cerr << post.at(1);
@@ -27,6 +28,8 @@ int main(int argc, char* argv[]){
 	cerr << post.at(4);
 	cerr << post.at(5);
 	cerr << post.at(6);
+	cerr << post.at(7);
+	cerr << post.at(8);
 
 
 	ofstream file("posts.txt");
