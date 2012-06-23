@@ -83,7 +83,7 @@ class FacebookData:public Data{
 
 		vector<Post> getHisPostList(string id){
 			Json::Value theJson;
-			faceboookAdapter.getHisJson("posts", id, theJson);
+			faceboookAdapter.getHisJson("feed", id, theJson);
 
 			vector<Post> ret;
 			while(1){
