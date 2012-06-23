@@ -7,12 +7,6 @@
 
 using namespace std;
 
-/*
- *profile ("")
- friends
- feed
- * */
-
 
 class Adapter{
 	public:
@@ -21,7 +15,7 @@ class Adapter{
 };
 
 class FacebookAdapter :public Adapter{
-	//type...
+	//type = "profile", "friends", "feed";
 	private:
 		string accessToken;
 		char tmpFileName[500];
@@ -33,6 +27,7 @@ class FacebookAdapter :public Adapter{
 };
 
 class TwitterAdapter:public Adapter{
+	//type = statuses/user_timeline, statuses/update, users/show
 	private:
 		string accessToken;
 		string accessTokenSecret;
@@ -41,8 +36,6 @@ class TwitterAdapter:public Adapter{
 		TwitterAdapter(string in_accessToken, string in_accessTokenSecret);
 		void getMyJson(string type, Json::Value& theJson);
 		void getHisJson(string type, string hisID, Json::Value& theJson);
-		void getNextJson(string url, Json::Value& theJson);
-
 };
 
 

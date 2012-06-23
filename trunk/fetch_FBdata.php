@@ -15,7 +15,7 @@ $outputFile=$argv[4];
 //$token = trim(file_get_contents("token.txt"));
 
 
-$url = "https://graph.facebook.com/". $person ."/".$object."?with=location&access_token=" . $access_token . "&limit=500";	
+$url = "https://graph.facebook.com/". $person ."/".$object."?access_token=" . $access_token . "&limit=10000";
 $json = file_get_contents($url);
 //$decoded_json =  json_decode($json);
 //print_r($decoded_json);
