@@ -11,10 +11,9 @@ int main(int argc, char* argv[]){
 
 
 	TwitterData twitterData(argv[1],argv[2]);
-	vector<User> userList = twitterData.getMyFriendList();
+	vector<string> userList = twitterData.getMyFriendIDList();
 	cerr << "number of friends = " << userList.size() << endl;
 	
-//	cerr << "number of friends = " << idList.size() << endl;
 	
 //	vector<Post> post = twitterData.getHisPostList("71026122");
 //	cerr << "number of posts = " <<  post.size() << endl;
