@@ -33,9 +33,6 @@ int main(int argc, char* argv[]){
 	}
 	else
 		assert(0);
-	char c;
-	input >> c;
-	assert(c == '\n');
 
 	SearchEngine searchEngine(database);
 	string dataType;
@@ -43,8 +40,6 @@ int main(int argc, char* argv[]){
 	if(dataType.compare("Post")){
 		string uid;
 		input >> uid;
-		input >> c;
-		assert(c == '\n');
 
 		string line;
 		getline(input, line);
@@ -83,8 +78,6 @@ int main(int argc, char* argv[]){
 	}
 	else if(dataType.compare("User")){
 //		Filter<User> *filter;
-//		input >> c;
-//		assert(c == '\n');
 
 		assert(0);
 		
