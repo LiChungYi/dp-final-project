@@ -9,6 +9,8 @@
 	file_put_contents('request_token_secret', $requestTokenSecret);
 
 	$registerURL = $oauth->getAuthorizeURL($request);
-	echo '<a href="' . $registerURL . '">Register with Twitter</a>';
+
+	header("Location: ".$registerURL);
+//	echo '<a href="' . $registerURL . '">Register with Twitter</a>';
  
 ?>

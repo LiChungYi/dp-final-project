@@ -1,6 +1,14 @@
 <?php
 if($_GET["pin"]==NULL){
-	echo '<hr/>add pin number';
+echo '<hr/>';
+echo '
+	<form name="input" action="./validate.php" method="get">
+	 please submit your pin number: <input type="text" name="pin" />
+	 <input type="submit" value="Submit" />
+	 </form> 
+';
+
+
 }
 else{
 	$requestToken = file_get_contents("request_token");
@@ -16,5 +24,7 @@ else{
 	// Save our access token/secret
 	file_put_contents("access_token", $accessToken);
 	file_put_contents("access_token_secret", $accessTokenSecret);
+	header("Location: ../interface.php?socialNetwork=TW");
+
 }
 ?>

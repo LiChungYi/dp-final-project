@@ -1,7 +1,11 @@
 <?php 
+
+if($_GET['object']==NULL)
+	$_GET['object'] = 'friends';
 $object = $_GET['object'];
 if(strcmp($object,"friend")==0)
 	$object="friends";
+
 
 
 
@@ -33,11 +37,10 @@ if($_SESSION['state'] && ($_SESSION['state'] === $_REQUEST['state'])) {
 		. "client_id=" . $app_id . "&redirect_uri=" . urlencode($my_url)
 		. "&client_secret=" . $app_secret . "&code=" . $code;
 
-echo 'hi';
 	$response = file_get_contents($token_url);
 	$params = null;
 	parse_str($response, $params);
-
+	
 	echo $params['access_token']."<br><br>";
 	$token_fp = fopen('token.txt',"w");
 	fprintf($token_fp,"%s",$params['access_token']);
