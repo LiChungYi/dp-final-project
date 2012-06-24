@@ -11,7 +11,7 @@
 #include "TimeParser.hpp"
 
 using namespace std;
-class Data{
+class Database{
 	public:
 		virtual string getMyID()=0;
 		virtual vector<string> getMyFriendIDList()=0;
@@ -20,7 +20,7 @@ class Data{
 	
 };
 
-class FacebookData:public Data{
+class FacebookDatabase:public Database{
 	private:
 		string accessToken;
 		FacebookAdapter faceboookAdapter;
@@ -41,7 +41,7 @@ class FacebookData:public Data{
 			return ret;
 		}*/
 	public:
-		FacebookData(string in_accessToken):accessToken(in_accessToken), faceboookAdapter(in_accessToken){}
+		FacebookDatabase(string in_accessToken):accessToken(in_accessToken), faceboookAdapter(in_accessToken){}
 		string getMyID(){
 			Json::Value theJson;
 			faceboookAdapter.getMyJson("profile", theJson);
@@ -77,7 +77,6 @@ class FacebookData:public Data{
 			user.relationshipStatus = theJson["relationship_status"].asString();
 			user.birthday = theJson["birthday"].asString();
 			user.location = theJson["location"]["name"].asString();
-			cout << user;
 			return user;
 		}
 
@@ -112,7 +111,7 @@ class FacebookData:public Data{
 
 };
 
-class TwitterData:public Data{
+class TwitterDatabase:public Database{
 	private:
 		string accessToken;
 		string accessTokenSecret;
@@ -127,7 +126,7 @@ class TwitterData:public Data{
 			string s(cs);
 			return s;
 		}
-		TwitterData(string in_accessToken, string in_accessTokenSecret):accessToken(in_accessToken), accessTokenSecret(in_accessTokenSecret),twitterAdapter(in_accessToken,in_accessTokenSecret){}
+		TwitterDatabase(string in_accessToken, string in_accessTokenSecret):accessToken(in_accessToken), accessTokenSecret(in_accessTokenSecret),twitterAdapter(in_accessToken,in_accessTokenSecret){}
 
 		
 		vector<string> getMyFriendIDList(){
