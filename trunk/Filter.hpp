@@ -39,7 +39,6 @@ class PostFromIDFilter:public Filter<Post>{
 };
 
 
-
 class UserRelationshipStatusFilter:public Filter<User>{
 	private:
 		string relationshipStatus;
@@ -63,4 +62,31 @@ class UserGenderFilter:public Filter<User>{
 			return false;
 		}
 };
+
+template <class T>
+class AndFilter: public Filter<T>{//Composite Pattern!
+	private:
+		Filter<T> *a, *b;
+	public:
+		AndFilter(Filter<T> *in_a, Filter<T> *in_b):a(in_a), b(in_b){}
+		virtual bool shouldKeep(T t){
+			if(a->shouldKeep(t) && b->shouldKeep(t))
+				return true;
+			return false;
+		}
+};
+
+template <class T>
+class OrFilter: public Filter<T>{//Composite Pattern!
+	private:
+		Filter<T> *a, *b;
+	public:
+		OrFilter(Filter<T> *in_a, Filter<T> *in_b):a(in_a), b(in_b){}
+		virtual bool shouldKeep(T t){
+			if(a->shouldKeep(t) || b->shouldKeep(t))
+				return true;
+			return false;
+		}
+};
+
 #endif //FILTER_HPP
