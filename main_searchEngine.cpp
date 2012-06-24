@@ -70,6 +70,7 @@ int main(int argc, char* argv[]){
 			stringstream ss(line);
 			getline(ss, tmp1, '\t');
 			assert(tmp1.compare("PostTimeFilter") == 0);
+			getline(ss, tmp1, '\t');
 			getline(ss, tmp2, '\t');
 			fb = new PostTimeFilter(tmp1, tmp2);
 		}
