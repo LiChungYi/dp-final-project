@@ -40,7 +40,7 @@ int main(int argc, char* argv[]){
 
 	*/
 
-	vector<User> result2 = se.searchAllMyFriendsByRelationshipStatus("Single");
+	vector<User> result2 = se.searchAllMyFriendsByRelationshipStatus("Single", "female");
 //	for(unsigned i = 0; i < result2.size(); ++i)
 //		cout << result2.at(i).relationshipStatus;
 	
