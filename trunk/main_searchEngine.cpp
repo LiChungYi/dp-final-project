@@ -37,7 +37,7 @@ int main(int argc, char* argv[]){
 	else
 		assert(0);
 	char c;
-	c = cin.get();
+	c = input.get();
 	assert(c == '\n');
 
 	SearchEngine searchEngine(database);
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
 		string uid;
 		input >> uid;
 
-		c = cin.get();//so we can do get line later
+		c = input.get();//so we can do get line later
 		assert(c == '\n');
 
 		list<Filter<Post>* > filterList; 
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]){
 
 	}
 	else if(dataType.compare("User")==0){
-		c = cin.get();//so we can do get line later
+		c = input.get();//so we can do get line later
 		assert(c == '\n');
 
 		list<Filter<User>* > filterList; 
