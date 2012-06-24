@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdlib.h>
+#include <fstream>
 
 #include "Adapter.hpp"
 #include "User.hpp"
@@ -17,6 +18,7 @@ class Database{
 		virtual vector<string> getMyFriendIDList()=0;
 		virtual User getUserInfo(string id)=0;
 		virtual vector<Post> getHisPostList(string id)=0;
+		virtual void dumpMyFriendData(string fileName) = 0;
 	
 };
 
@@ -109,6 +111,25 @@ class FacebookDatabase:public Database{
 			return ret;
 		}
 
+		void dumpMyFriendData(string fileName){
+			ofstream outFile(fileName.c_str());
+
+			Json::Value theJson;
+			faceboookAdapter.getMyJson("friends", theJson);
+
+			while(1){
+				for(unsigned  i =0; i < theJson["data"].size(); ++i){
+					outFile << theJson["data"][i]["id"].asString() << "\t" << theJson["data"][i]["name"].asString() << endl;
+				}
+				theJson = theJson["paging"]["next"];
+				if(theJson.isNull())
+					break;
+				string url = theJson.asString();
+				faceboookAdapter.getNextJson(url, theJson);
+			}
+
+			outFile.close();
+		}
 };
 
 class TwitterDatabase:public Database{
@@ -139,7 +160,7 @@ class TwitterDatabase:public Database{
 				char cs[50];
 				sprintf(cs,"%d",ID);
 				string s(cs);
-				getUserInfo(s);
+		//		getUserInfo(s);
 				ret.push_back(s);	
 			}
 			return 	ret;
@@ -149,7 +170,7 @@ class TwitterDatabase:public Database{
 			twitterAdapter.getHisJson("users/show", id, theJson);
 			User u(theJson["name"].asString(),id,"",theJson["lang"].asString(),"","",theJson["location"].asString());
 
-			cout<<u<<endl;
+		//	cout<<u<<endl;
 			return u;
 		}
 		vector<Post> getHisPostList(string id){
@@ -168,6 +189,24 @@ class TwitterDatabase:public Database{
 			return 	ret;
 		}
 
+		void dumpMyFriendData(string fileName){
+			ofstream outFile(fileName.c_str());
+
+			Json::Value theJson;
+			twitterAdapter.getMyJson("friends/ids", theJson);
+
+			unsigned i;
+			for(i=0;i<theJson["ids"].size();i++){
+				int ID = theJson["ids"][i].asInt();
+				char cs[50];
+				sprintf(cs,"%d",ID);
+				string s(cs);
+		//		getUserInfo(s);
+				outFile << s << endl;
+			}
+
+			outFile.close();
+		}
 };
 
 
