@@ -9,6 +9,7 @@ else
 	$functionId = (int)$_GET['functionId'];
 $socialNetwork = $_GET['socialNetwork'];
 
+//------get access token
 $accessToken ="";
 $accessTokenSecret ="";
 if(strcmp($socialNetwork,"TW")==0){
@@ -18,11 +19,11 @@ if(strcmp($socialNetwork,"TW")==0){
 	$accessToken =trim(file_get_contents("./facebook/access_token"));	
 }
 
+//------get friend list
 if(file_exists($socialNetwork.$accessToken.'_friend')==false){
 	system('./main_dumpFriendToFile '. $socialNetwork.$accessToken.'_friend '.$socialNetwork.' '.$accessToken.' '.$accessTokenSecret);
 }
 $friends = file($socialNetwork.$accessToken.'_friend');
-
 $friends_select = '<select name="uid">';
 for($i=0;$i<count($friends);$i++){
 	$friends[$i]=explode("\t",$friends[$i],2);
@@ -30,8 +31,9 @@ for($i=0;$i<count($friends);$i++){
 }
 $friends_select = $friends_select.'</select>';
 
-$from_year_select = '<select name ="fromYear">';
-$to_year_select = '<select name ="toYear">';
+//-----time 
+$from_year_select = '<select name ="fromYear"><option value="0000">null</option>';
+$to_year_select = '<select name ="toYear"><option value="9999">null</option>';
 for($i=2012;$i>1900;$i--){
 	$from_year_select = $from_year_select.'<option value="'.$i.'">'.$i.'</option>';
 	$to_year_select = $to_year_select.'<option value="'.$i.'">'.$i.'</option>';
@@ -47,37 +49,39 @@ echo '
 
 <li>Search</li>
 
-<form name="input" action="./interface.php" method="get">
-<input type="text" name="query" />
+	<form name="input" action="./interface.php" method="get">
+	<input type="text" name="query" value="MLB"/>
 
-<select name="type">
-<option value="Post">Post</option>
-<option value="User">User</option>
-</select>
+	<select name="type">
+	<option value="Post">Post</option>
+	<option value="User">User</option>
+	</select>
 
-'.$friends_select.'From:'.$from_year_select.'
+	'.$friends_select.'From:'.$from_year_select.'
 
 
-<select name="fromMonth">
-<option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option>
-<option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option>
-<option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-</select> - To:
+	<select name="fromMonth">
+	<option value="00">null</option>
+	<option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option>
+	<option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option>
+	<option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+	</select> - To:
 
-'.$to_year_select.'
-<select name="toMonth">
-<option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option>
-<option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option>
-<option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-</select>
+	'.$to_year_select.'
+	<select name="toMonth">
+	<option value="99">null</option>
+	<option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option>
+	<option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option>
+	<option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+	</select>
 
-<input type="hidden" name="functionId" value="1" />
-<input type="hidden" name="socialNetwork" value="'.$socialNetwork.'" />
-<input type="submit" value="Submit" />
-</form> 
-<hr/>
+	<input type="hidden" name="functionId" value="1" />
+	<input type="hidden" name="socialNetwork" value="'.$socialNetwork.'" />
+	<input type="submit" value="Submit" />
+	</form> 
+	<hr/>
 
-<li> function 3</li><hr/>
+<li> </li><hr/>
 
 <li> function 4</li><hr/>
 
@@ -102,10 +106,11 @@ if($functionId > 0){
 			$input_file_name = $type.$query.$uid.$from_time.$to_time.$socialNetwork.$accessToken.$accessTokenSecret;
 			$output_file_name = $input_file_name."_output";
 			
-			if(file_exists($output_file_name)==false){
+			if(file_exists($output_file_name)==false || true){//!!!!!!!!!!
+
 				if(strcmp($socialNetwork,"TW")==0){
 					$cmd =  $output_file_name."\n".
-						$socialNetwork."\t".$accessToken."\t".$accesTokenSecret."\n".
+						$socialNetwork."\t".$accessToken."\t".$accessTokenSecret."\n".
 						$type."\t".$uid."\n".
 						"PostContentFilter\t".$query."\n".
 						"and"."\n".
@@ -118,8 +123,10 @@ if($functionId > 0){
 						"and"."\n".
 						"PostTimeFilter\t".$from_time."\t".$to_time."\n";
 				}
-				system('./main_searchEngine '.$input_file_name);
+				echo $cmd;	
 				file_put_contents($input_file_name,$cmd);
+				system('./main_searchEngine '.$input_file_name);
+				echo 'done';
 			}
 				
 			break;

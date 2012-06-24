@@ -2,13 +2,27 @@
 #define FILTER_HPP
 
 
+#include <map>
 #include "Data.hpp"
+
+using namespace std;
 
 // functional object (Command Pattern)
 
 template <class T>	//T can be Post or User
 class Filter{
+	private:
+		static map<string, Filter*> filterManager;
 	public:
+		Filter(string className){
+			filterManager.insert(make_pair(className,this));
+		}
+		Filter(){
+		}
+		static Filter* newFilter(string& className){
+			
+		}
+		Filter* Clone() {}
 		virtual bool shouldKeep(T) = 0;		
 };
 
@@ -24,6 +38,12 @@ class PostContentFilter:public Filter<Post>{
 				return true;
 			return false;
 		}
+		PostContentFilter():Filter<Post>("PostContentFilter"){
+		}
+		Filter<Post>* Clone(){
+			return new PostContentFilter(*this);
+
+		}
 };
 
 class PostFromIDFilter:public Filter<Post>{
@@ -36,6 +56,11 @@ class PostFromIDFilter:public Filter<Post>{
 				return true;
 			return false;
 		}
+		PostFromIDFilter():Filter<Post>("PostFromIDFilter"){
+		}
+		Filter<Post>* Clone(){
+			return new PostFromIDFilter(*this);
+		}
 };
 
 class PostTimeFilter:public Filter<Post>{
@@ -47,6 +72,12 @@ class PostTimeFilter:public Filter<Post>{
 			if(fromTime.compare(p.createdTime) <= 0 && p.createdTime.compare(toTime) <= 0 )
 				return true;
 			return false;
+		}
+		
+		PostTimeFilter():Filter<Post>("PostTimeFilter"){
+		}
+		Filter<Post>* Clone(){
+			return new PostTimeFilter(*this);
 		}
 };
 
@@ -61,6 +92,11 @@ class UserRelationshipStatusFilter:public Filter<User>{
 				return true;
 			return false;
 		}
+		UserRelationshipStatusFilter():Filter<User>("UserRelationshipStatusFilter"){
+		}
+		Filter<User>* Clone(){
+			return new UserRelationshipStatusFilter(*this);	
+		}
 };
 
 class UserGenderFilter:public Filter<User>{
@@ -72,6 +108,11 @@ class UserGenderFilter:public Filter<User>{
 			if(u.gender.compare(gender) == 0)
 				return true;
 			return false;
+		}
+		UserGenderFilter():Filter<User>("UserRelationshipStatusFilter"){
+		}
+		Filter<User>* Clone(){
+			return new UserGenderFilter(*this);
 		}
 };
 
@@ -85,6 +126,11 @@ class AndFilter: public Filter<T>{//Composite Pattern!
 			if(a->shouldKeep(t) && b->shouldKeep(t))
 				return true;
 			return false;
+		}
+		AndFilter():Filter<T>("AndFilter"){
+		}
+		Filter<T>* Clone(){
+			return new AndFilter(*this);
 		}
 		~AndFilter(){
 			delete a;
@@ -102,6 +148,11 @@ class OrFilter: public Filter<T>{//Composite Pattern!
 			if(a->shouldKeep(t) || b->shouldKeep(t))
 				return true;
 			return false;
+		}
+		OrFilter():Filter<T>("OrFilter"){
+		}
+		Filter<T>* Clone(){
+			return new OrFilter("OrFilter");
 		}
 		~OrFilter(){
 			delete a;
