@@ -6,12 +6,22 @@
 #include "Database.hpp"
 #include "SearchEngine.hpp"
 
+
 #define LINE_SIZE 50000
 using namespace std;
 /*
  * parsing the input format of general search engine
  * */
 int main(int argc, char* argv[]){
+
+	PostContentFilter dummy1 ;
+	PostFromIDFilter dummy2;
+	PostTimeFilter dummy3;
+	UserGenderFilter dummy4;
+	UserRelationshipStatusFilter dummy5;
+	
+//	cout<<Filter<T>::filterManager.size()<<endl;
+
 	assert(argc == 2);
 	ifstream input(argv[1]);
 	
@@ -32,7 +42,9 @@ int main(int argc, char* argv[]){
 		string a, b;
 		input >> a;
 		input >> b;
+	cerr<<"start searchi"<<endl;
 		database = new TwitterDatabase(a, b);
+	cerr<<"start searchj"<<endl;
 	}
 	else
 		assert(0);
@@ -40,7 +52,9 @@ int main(int argc, char* argv[]){
 	c = input.get();
 	assert(c == '\n');
 
+	cerr<<"start search"<<endl;
 	SearchEngine searchEngine(database);
+	cerr<<"start search1"<<endl;
 	string dataType;
 	input >> dataType;
 	if(dataType.compare("Post")==0){
@@ -104,7 +118,9 @@ int main(int argc, char* argv[]){
 
 
 		Filter<Post> *filter = new AndFilter<Post>(fa, fb);
+		cerr<<"start search"<<endl;
 		vector<Post> ret = searchEngine.searchAllPostsOfUser(uid, filter);
+		cerr<<"end search"<<endl;
 		for(unsigned i = 0; i < ret.size(); ++i)
 			output << ret.at(i);
 
