@@ -2,7 +2,7 @@
 #define TIMEPARSER_HPP
 
 #include <iostream>
-#include <stdlib.h>
+#include <stdio.h>
 #include<stdlib.h>
 #include<string>
 using namespace std;

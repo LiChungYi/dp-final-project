@@ -1,13 +1,18 @@
-all:	FBmain TWFunc1
+all:	main_FB TWFunc1 main_dumpFriendToFile
 
-FBmain:	 json.o Adapter.o json/json.h Adapter.hpp Database.hpp User.hpp Post.hpp SearchEngine.hpp Filter.hpp FBmain.cpp
-	g++ -Wall -O3 FBmain.cpp json.o Adapter.o -o FBmain 
-TWFunc1: json.o Adapter.o json/json.h Adapter.hpp Database.hpp User.hpp Post.hpp SearchEngine.hpp Filter.hpp TwitterFunc1.cpp 
+main_FB:	 allLibrary main_FB.cpp
+	g++ -Wall -O3 main_FB.cpp json.o Adapter.o -o main_FB
+TWFunc1: allLibrary TwitterFunc1.cpp 
 	g++ -Wall -O3 TwitterFunc1.cpp json.o Adapter.o -o TWFunc1
-json.o:
-	g++ -c json.cpp
-Adapter.o:
-	g++ -c Adapter.cpp
+main_dumpFriendToFile: allLibrary main_dumpFriendToFile.cpp
+	g++ -Wall -O3 main_dumpFriendToFile.cpp json.o Adapter.o -o main_dumpFriendToFile
+
+allLibrary: json.o Adapter.o json/json.h Adapter.hpp Database.hpp User.hpp Post.hpp SearchEngine.hpp Filter.hpp 
+
+json.o: json.cpp json/json.h
+	g++ -c -Wall -O3 json.cpp
+Adapter.o: Adapter.cpp Adapter.hpp 
+	g++ -c -Wall -O3 Adapter.cpp
 
 clean:
 	rm -rf FBmain TWFunc1 *.json *.o 
