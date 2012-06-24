@@ -174,9 +174,9 @@ class OrFilter: public Filter<T>{//Composite Pattern!
 			delete b;
 		}
 };
-/*
 template<class T> 
 map<string,Filter<T>*> Filter<T>::filterManager;
+/*
 
 PostContentFilter PostContentFilter::dummy;
 PostFromIDFilter PostFromIDFilter::dummy;

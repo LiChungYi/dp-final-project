@@ -2,10 +2,10 @@
 #include<iostream>
 #include<fstream>
 #include<string.h>
+#include<list>
 
 #include "Database.hpp"
 #include "SearchEngine.hpp"
-
 
 #define LINE_SIZE 50000
 using namespace std;
@@ -13,15 +13,11 @@ using namespace std;
  * parsing the input format of general search engine
  * */
 int main(int argc, char* argv[]){
-
 	PostContentFilter dummy1 ;
 	PostFromIDFilter dummy2;
 	PostTimeFilter dummy3;
 	UserGenderFilter dummy4;
 	UserRelationshipStatusFilter dummy5;
-	
-//	cout<<Filter<T>::filterManager.size()<<endl;
-
 	assert(argc == 2);
 	ifstream input(argv[1]);
 	
@@ -42,9 +38,7 @@ int main(int argc, char* argv[]){
 		string a, b;
 		input >> a;
 		input >> b;
-	cerr<<"start searchi"<<endl;
 		database = new TwitterDatabase(a, b);
-	cerr<<"start searchj"<<endl;
 	}
 	else
 		assert(0);
@@ -52,9 +46,7 @@ int main(int argc, char* argv[]){
 	c = input.get();
 	assert(c == '\n');
 
-	cerr<<"start search"<<endl;
 	SearchEngine searchEngine(database);
-	cerr<<"start search1"<<endl;
 	string dataType;
 	input >> dataType;
 	if(dataType.compare("Post")==0){
@@ -77,35 +69,34 @@ int main(int argc, char* argv[]){
 		
 			filterList.push_back(Filter<Post>::newFilter(className, arg)); 
 
-			string line;
 			getline(input, line);
 			if(!input.good())
 				break;
 			combineMethod.push_back(line);
 		}
 
-		list<Filter<Post>*> i1t = filter.begin();
+		list<Filter<Post>*>::iterator i1t = filterList.begin();
 		list<string>::iterator i2t = combineMethod.begin();
 		while(i2t != combineMethod.end()){
 			if(i2t->compare("and") == 0){
 				Filter<Post>* tmp = *i1t;
 				i1t = filterList.erase(i1t);
 				i2t = combineMethod.erase(i2t);
-				i1t = new AndFilter(tmp, *i1t); 
+				*i1t = new AndFilter<Post>(tmp, *i1t); 
 			}
 			else{
 				i1t++;
 				i2t++;
 			}
 		}
-		i1t = filter.begin();
+		i1t = filterList.begin();
 		i2t = combineMethod.begin();
 		while(i2t != combineMethod.end()){
 			if(i2t->compare("or") == 0){
 				Filter<Post>* tmp = *i1t;
 				i1t = filterList.erase(i1t);
 				i2t = combineMethod.erase(i2t);
-				i1t = new OrFilter(tmp, *i1t); 
+				*i1t = new OrFilter<Post>(tmp, *i1t); 
 			}
 			else{
 				i1t++;
@@ -117,10 +108,7 @@ int main(int argc, char* argv[]){
 		assert(filterList.size() == 1);
 
 
-		Filter<Post> *filter = new AndFilter<Post>(fa, fb);
-		cerr<<"start search"<<endl;
-		vector<Post> ret = searchEngine.searchAllPostsOfUser(uid, filter);
-		cerr<<"end search"<<endl;
+		vector<Post> ret = searchEngine.searchAllPostsOfUser(uid, filterList.front());
 		for(unsigned i = 0; i < ret.size(); ++i)
 			output << ret.at(i);
 
@@ -142,35 +130,34 @@ int main(int argc, char* argv[]){
 		
 			filterList.push_back(Filter<User>::newFilter(className, arg)); 
 
-			string line;
 			getline(input, line);
 			if(!input.good())
 				break;
 			combineMethod.push_back(line);
 		}
 
-		list<Filter<User>*> i1t = filter.begin();
+		list<Filter<User>*>::iterator i1t = filterList.begin();
 		list<string>::iterator i2t = combineMethod.begin();
 		while(i2t != combineMethod.end()){
 			if(i2t->compare("and") == 0){
 				Filter<User>* tmp = *i1t;
 				i1t = filterList.erase(i1t);
 				i2t = combineMethod.erase(i2t);
-				i1t = new AndFilter(tmp, *i1t); 
+				*i1t = new AndFilter<User>(tmp, *i1t); 
 			}
 			else{
 				i1t++;
 				i2t++;
 			}
 		}
-		i1t = filter.begin();
+		i1t = filterList.begin();
 		i2t = combineMethod.begin();
 		while(i2t != combineMethod.end()){
 			if(i2t->compare("or") == 0){
 				Filter<User>* tmp = *i1t;
 				i1t = filterList.erase(i1t);
 				i2t = combineMethod.erase(i2t);
-				i1t = new OrFilter(tmp, *i1t); 
+				*i1t = new OrFilter<User>(tmp, *i1t); 
 			}
 			else{
 				i1t++;
@@ -182,7 +169,7 @@ int main(int argc, char* argv[]){
 		assert(filterList.size() == 1);
 
 
-		vector<User> ret = searchEngine.searchAllMyFriends(filterList.at(0));
+		vector<User> ret = searchEngine.searchAllMyFriends(filterList.front());
 		for(unsigned i = 0; i < ret.size(); ++i)
 			output << ret.at(i);
 	}
