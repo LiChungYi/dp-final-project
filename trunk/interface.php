@@ -1,4 +1,8 @@
 <?
+header("Content-Type:text/html; charset=utf-8");
+echo '<img src="https://graph.facebook.com/starrywinter/picture"/><br>';
+
+
 if($_GET['functionId']==NULL)
 	$functionId=-1;
 else
@@ -7,21 +11,21 @@ $socialNetwork = $_GET['socialNetwork'];
 
 $accessToken ="";
 $accessTokenSecret ="";
-if(strcmp($_GET['socialNetwork'],"TW")==0){
-	$accessToken =file_get_contents("./twitter/access_token");	
-	$accessToeknSecret =file_get_contents("./twitter/access_token_secret");	
-}
-else{
-	$accessToken =file_get_contents("./facebook/access_token");	
+if(strcmp($socialNetwork,"TW")==0){
+	$accessToken =trim(file_get_contents("./twitter/access_token"));	
+	$accessTokenSecret =trim(file_get_contents("./twitter/access_token_secret"));
+}else{
+	$accessToken =trim(file_get_contents("./facebook/access_token"));	
 }
 
-system('./main_dumpFriendToFile '.$accessToken.' '.$accessTokenSecret);
-//echo './main_dumpFriendToFile '.$accessToken.' '.$accessTokenSecret;
+if(file_exists($socialNetwork.$accessToken.'_friend')==false){
+	system('./main_dumpFriendToFile '. $socialNetwork.$accessToken.'_friend '.$socialNetwork.' '.$accessToken.' '.$accessTokenSecret);
+}
+$friends = file($socialNetwork.$accessToken.'_friend');
 
-$friends = file("friendList.txt");
 $friends_select = '<select name="uid">';
 for($i=0;$i<count($friends);$i++){
-	$friends[$i]=explode(" ",$friends[$i],2);
+	$friends[$i]=explode("\t",$friends[$i],2);
 	$friends_select = $friends_select.'<option value="'.$friends[$i][0].'">'.$friends[$i][1].'</option>';
 }
 $friends_select = $friends_select.'</select>';
@@ -35,7 +39,7 @@ for($i=2012;$i>1900;$i--){
 $from_year_select = $from_year_select.'</select>';
 $to_year_select = $to_year_select.'</select>';
 
-echo "<hr/>Function Id is".$functionId."<br>";
+echo "<hr/>Tools";
 echo '
 </hr>
 <ul>
@@ -84,10 +88,42 @@ echo '
 if($functionId > 0){
 	$token = trim(file_get_contents("token.txt"));
 	switch($functionId){
-		case 0:
-			//system('./main '.$token, $returnval);
-			break;
 		case 1:
+			//system('./main '.$token, $returnval);
+			
+			$type = $_GET['type'];
+			$query = $_GET['query'];
+			$uid = $_GET['uid']; //type ==POST
+			$from_time = $_GET['fromYear']."-".$_GET['fromMonth']."-00";
+			$to_time = $_GET['toYear']."-".$_GET['toMonth']."-99";
+			//$socialNetwork;
+			//$accessToken ;
+			//$accessTokenSecret ;
+			$input_file_name = $type.$query.$uid.$from_time.$to_time.$socialNetwork.$accessToken.$accessTokenSecret;
+			$output_file_name = $input_file_name."_output";
+			
+			if(file_exists($output_file_name)==false){
+				if(strcmp($socialNetwork,"TW")==0){
+					$cmd =  $output_file_name."\n".
+						$socialNetwork."\t".$accessToken."\t".$accesTokenSecret."\n".
+						$type."\t".$uid."\n".
+						"PostContentFilter\t".$query."\n".
+						"and"."\n".
+						"PostTimeFilter\t".$from_time."\t".$to_time."\n";
+				}else{	
+					$cmd =  $output_file_name."\n".
+						$socialNetwork."\t".$accessToken."\n".
+						$type."\t".$uid."\n".
+						"PostContentFilter\t".$query."\n".
+						"and"."\n".
+						"PostTimeFilter\t".$from_time."\t".$to_time."\n";
+				}
+				system('./main_searchEngine '.$input_file_name);
+				file_put_contents($input_file_name,$cmd);
+			}
+				
+			break;
+		case 2:
 			break;
 	}
 }
