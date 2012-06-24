@@ -8,6 +8,9 @@
 
 #define LINE_SIZE 50000
 using namespace std;
+/*
+ * parsing the input format of general search engine
+ * */
 int main(int argc, char* argv[]){
 	assert(argc == 2);
 	ifstream input(argv[1]);
@@ -47,36 +50,58 @@ int main(int argc, char* argv[]){
 		c = cin.get();//so we can do get line later
 		assert(c == '\n');
 
+		list<Filter<Post>* > filterList; 
+		list<string> combineMethod;
+		while(1){
+			string line;
+			getline(input, line);
 
-		string line;
-		getline(input, line);
-		Filter<Post> *fa;
-		{
-			string tmp;
+			string className, arg;
 			stringstream ss(line);
-			getline(ss, tmp, '\t');
-			cout<<line<<endl;
-			assert(tmp.compare("PostContentFilter") == 0);
-			getline(ss, tmp, '\t');
-			fa = new PostContentFilter(tmp);
+			getline(ss, className, '\t');
+			getline(ss, arg, '\t');
+		
+			filterList.push_back(Filter<Post>::newFilter(className, arg)); 
+
+			string line;
+			getline(input, line);
+			if(!input.good())
+				break;
+			combineMethod.push_back(line);
 		}
 
-
-		getline(input, line);
-		assert(line.compare("and") == 0);
-
-
-		getline(input, line);
-		Filter<Post> *fb;
-		{
-			string tmp1, tmp2;
-			stringstream ss(line);
-			getline(ss, tmp1, '\t');
-			assert(tmp1.compare("PostTimeFilter") == 0);
-			getline(ss, tmp1, '\t');
-			getline(ss, tmp2, '\t');
-			fb = new PostTimeFilter(tmp1, tmp2);
+		list<Filter<Post>*> i1t = filter.begin();
+		list<string>::iterator i2t = combineMethod.begin();
+		while(i2t != combineMethod.end()){
+			if(i2t->compare("and") == 0){
+				Filter<Post>* tmp = *i1t;
+				i1t = filterList.erase(i1t);
+				i2t = combineMethod.erase(i2t);
+				i1t = new AndFilter(tmp, *i1t); 
+			}
+			else{
+				i1t++;
+				i2t++;
+			}
 		}
+		i1t = filter.begin();
+		i2t = combineMethod.begin();
+		while(i2t != combineMethod.end()){
+			if(i2t->compare("or") == 0){
+				Filter<Post>* tmp = *i1t;
+				i1t = filterList.erase(i1t);
+				i2t = combineMethod.erase(i2t);
+				i1t = new OrFilter(tmp, *i1t); 
+			}
+			else{
+				i1t++;
+				i2t++;
+			}
+		}
+		
+		assert(combineMethod.size() == 0);
+		assert(filterList.size() == 1);
+
 
 		Filter<Post> *filter = new AndFilter<Post>(fa, fb);
 		vector<Post> ret = searchEngine.searchAllPostsOfUser(uid, filter);
@@ -85,16 +110,69 @@ int main(int argc, char* argv[]){
 
 	}
 	else if(dataType.compare("User")==0){
-//		Filter<User> *filter;
 		c = cin.get();//so we can do get line later
 		assert(c == '\n');
-		assert(0);
+
+		list<Filter<User>* > filterList; 
+		list<string> combineMethod;
+		while(1){
+			string line;
+			getline(input, line);
+
+			string className, arg;
+			stringstream ss(line);
+			getline(ss, className, '\t');
+			getline(ss, arg, '\t');
 		
+			filterList.push_back(Filter<User>::newFilter(className, arg)); 
+
+			string line;
+			getline(input, line);
+			if(!input.good())
+				break;
+			combineMethod.push_back(line);
+		}
+
+		list<Filter<User>*> i1t = filter.begin();
+		list<string>::iterator i2t = combineMethod.begin();
+		while(i2t != combineMethod.end()){
+			if(i2t->compare("and") == 0){
+				Filter<User>* tmp = *i1t;
+				i1t = filterList.erase(i1t);
+				i2t = combineMethod.erase(i2t);
+				i1t = new AndFilter(tmp, *i1t); 
+			}
+			else{
+				i1t++;
+				i2t++;
+			}
+		}
+		i1t = filter.begin();
+		i2t = combineMethod.begin();
+		while(i2t != combineMethod.end()){
+			if(i2t->compare("or") == 0){
+				Filter<User>* tmp = *i1t;
+				i1t = filterList.erase(i1t);
+				i2t = combineMethod.erase(i2t);
+				i1t = new OrFilter(tmp, *i1t); 
+			}
+			else{
+				i1t++;
+				i2t++;
+			}
+		}
+		
+		assert(combineMethod.size() == 0);
+		assert(filterList.size() == 1);
+
+
+		vector<User> ret = searchEngine.searchAllMyFriends(filterList.at(0));
+		for(unsigned i = 0; i < ret.size(); ++i)
+			output << ret.at(i);
 	}
 	else
 		assert(0);
 	
-
 	input.close();
 	output.close();
 }
