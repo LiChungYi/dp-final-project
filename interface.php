@@ -52,11 +52,6 @@ echo '
 	<form name="input" action="./interface.php" method="get">
 	<input type="text" name="query" value="MLB"/>
 
-	<select name="type">
-	<option value="Post">Post</option>
-	<option value="User">User</option>
-	</select>
-
 	'.$friends_select.'From:'.$from_year_select.'
 
 
@@ -77,11 +72,12 @@ echo '
 
 	<input type="hidden" name="functionId" value="1" />
 	<input type="hidden" name="socialNetwork" value="'.$socialNetwork.'" />
+	<input type="hidden" name="type" value="Post" />
 	<input type="submit" value="Submit" />
 	</form> 
 	<hr/>
 
-<li> </li><hr/>
+<li> User Search</li><hr/>
 
 <li> function 4</li><hr/>
 

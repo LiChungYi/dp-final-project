@@ -12,8 +12,9 @@ class SearchEngine{
 			vector<Post> postList = database->getHisPostList(userID);
 			vector<Post> result;
 			for(vector<Post>::iterator it = postList.begin(); it != postList.end(); it++){
-				if(filter->shouldKeep(*it))
+				if(filter->shouldKeep(*it)){
 					result.push_back(*it);
+				}
 			}
 			return result;
 			
