@@ -37,17 +37,20 @@ int main(int argc, char* argv[]){
 	SearchEngine searchEngine(database);
 	string dataType;
 	input >> dataType;
-	if(dataType.compare("Post")){
+	if(dataType.compare("Post")==0){
 		string uid;
 		input >> uid;
-
 		string line;
 		getline(input, line);
+		cout<<"1"<<line<<endl;
+		getline(input, line);
+		cout<<"2"<<line<<endl;
 		Filter<Post> *fa;
 		{
 			string tmp;
 			stringstream ss(line);
 			getline(ss, tmp, '\t');
+			cout<<line<<endl;
 			assert(tmp.compare("PostContentFilter") == 0);
 			getline(ss, tmp, '\t');
 			fa = new PostContentFilter(tmp);
@@ -76,9 +79,8 @@ int main(int argc, char* argv[]){
 			output << ret.at(i);
 
 	}
-	else if(dataType.compare("User")){
+	else if(dataType.compare("User")==0){
 //		Filter<User> *filter;
-
 		assert(0);
 		
 	}

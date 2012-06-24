@@ -9,11 +9,13 @@ if(strcmp($object,"friend")==0)
 
 
 
-header("Content-Type:text/html; charset=utf-8");
+//header("Content-Type:text/html; charset=utf-8");
 
+//$app_id = '237933852991313';
+//$app_secret = 
 $app_id =  '346899418712471';
 $app_secret =  'de58ce8f0e3ca5b288a219b72322ba9f';
-$my_url = "http://www.csie.ntu.edu.tw/~b96102/facebook/example.php?object=".$object;
+$my_url = "http://mslab.csie.ntu.edu.tw/~chungyi/DP/dp-final-project/facebook/example.php?object=".$object;
 $scope = "read_friendlists,read_stream,user_status";
 
 session_start();
@@ -42,12 +44,11 @@ if($_SESSION['state'] && ($_SESSION['state'] === $_REQUEST['state'])) {
 	parse_str($response, $params);
 	
 	echo $params['access_token']."<br><br>";
-	$token_fp = fopen('token.txt',"w");
-	fprintf($token_fp,"%s",$params['access_token']);
-	fclose($token_fp);
-	chmod ( "token.txt" , 0755);
+	file_put_contents("access_token",$params['access_token']);
+	
+	header("Location: ../interface.php?socialNetwork=FB&dummy=xx");
 
-
+/*
 	$url = "https://graph.facebook.com/me/".$object."?access_token=" . $params['access_token'];	
 	$json = file_get_contents($url);
 	$decoded_json =  json_decode($json);
@@ -56,7 +57,7 @@ if($_SESSION['state'] && ($_SESSION['state'] === $_REQUEST['state'])) {
 	fprintf($fp,"%s",$json);
 	fclose($fp);
 	chmod ( $object.".json" , 0755);
-
+*/
 /*	$graph_url = "https://graph.facebook.com/me?access_token=" 
 		. $params['access_token'];
 	$user = json_decode(file_get_contents($graph_url));
