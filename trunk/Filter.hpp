@@ -40,11 +40,11 @@ class PostFromIDFilter:public Filter<Post>{
 
 
 
-class UserRelationshipFilter:public Filter<User>{
+class UserRelationshipStatusFilter:public Filter<User>{
 	private:
 		string relationshipStatus;
 	public:
-		UserRelationshipFilter(string in_relationshipStatus):relationshipStatus(in_relationshipStatus){}
+		UserRelationshipStatusFilter(string in_relationshipStatus):relationshipStatus(in_relationshipStatus){}
 		virtual bool shouldKeep(User u){
 			if(u.relationshipStatus.compare(relationshipStatus) == 0)
 				return true;

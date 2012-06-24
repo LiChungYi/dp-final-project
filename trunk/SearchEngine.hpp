@@ -1,12 +1,12 @@
 #ifndef SEARCH_ENGINE_HPP
 #define SEARCH_ENGINE_HPP
-#include "Data.hpp"
+#include "Database.hpp"
 #include "Filter.hpp"
 class SearchEngine{
 	private:
-		Data *data;	//BRIDGE PATTERN!
+		Database *data;	//BRIDGE PATTERN!
 	public:
-		SearchEngine(Data *in_data): data(in_data){}
+		SearchEngine(Database *in_data): data(in_data){}
 
 		vector<Post> searchAllPostsOfUser(string userID, Filter<Post> *filter){
 			vector<Post> postList = data->getHisPostList(userID);
@@ -32,8 +32,10 @@ class SearchEngine{
 			vector<User> result;
 			for(vector<string>::iterator it = userIDList.begin(); it != userIDList.end(); it++){
 				User u = data->getUserInfo(*it);
-				if(filter->shouldKeep(u))
+				if(filter->shouldKeep(u)){
 					result.push_back(u);
+					cout << u;
+				}
 			}
 			return result;
 		}
@@ -41,7 +43,7 @@ class SearchEngine{
 
 		//may be deleted, here just a simple testing method
 		vector<User> searchAllMyFriendsByRelationshipStatus(string status){
-			Filter<User> *f = new UserRelationshipFilter(status);
+			Filter<User> *f = new UserRelationshipStatusFilter(status);
 			return searchAllMyFriends(f);
 		}
 };

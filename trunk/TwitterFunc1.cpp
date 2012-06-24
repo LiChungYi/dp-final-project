@@ -3,23 +3,23 @@
 
 
 #include"Adapter.hpp"
-#include"Data.hpp"
+#include"Database.hpp"
 #include"User.hpp"
 #include"Post.hpp"
 
 int main(int argc, char* argv[]){
 
 
-	TwitterData twitterData(argv[1],argv[2]);
-//	string id = twitterData.getMyID();
+	TwitterDatabase twitterDatabase(argv[1],argv[2]);
+//	string id = twitterDatabase.getMyID();
 //	cout<<id<<endl;
 
 
-//	vector<string> userList = twitterData.getMyFriendIDList();
+//	vector<string> userList = twitterDatabase.getMyFriendIDList();
 //	cerr << "number of friends = " << userList.size() << endl;
 	
 	
-	vector<Post> post = twitterData.getHisPostList("71026122");
+	vector<Post> post = twitterDatabase.getHisPostList("71026122");
 	cerr << "number of posts = " <<  post.size() << endl;
 
 
