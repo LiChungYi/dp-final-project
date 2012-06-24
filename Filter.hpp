@@ -38,6 +38,18 @@ class PostFromIDFilter:public Filter<Post>{
 		}
 };
 
+class PostTimeFilter:public Filter<Post>{
+	private:
+		string fromTime, toTime;
+	public:
+		PostTimeFilter(string in_fromTime, string in_toTime):fromTime(in_fromTime), toTime(in_toTime){}
+		virtual bool shouldKeep(Post p){
+			if(fromTime.compare(p.createdTime) <= 0 && p.createdTime.compare(toTime) <= 0 )
+				return true;
+			return false;
+		}
+};
+
 
 class UserRelationshipStatusFilter:public Filter<User>{
 	private:
@@ -74,6 +86,10 @@ class AndFilter: public Filter<T>{//Composite Pattern!
 				return true;
 			return false;
 		}
+		~AndFilter(){
+			delete a;
+			delete b;
+		}
 };
 
 template <class T>
@@ -87,6 +103,11 @@ class OrFilter: public Filter<T>{//Composite Pattern!
 				return true;
 			return false;
 		}
+		~OrFilter(){
+			delete a;
+			delete b;
+		}
 };
+
 
 #endif //FILTER_HPP

@@ -4,9 +4,9 @@
 #include "Filter.hpp"
 class SearchEngine{
 	private:
-		Database *database;	//BRIDGE PATTERN!
+		Database* database;	//BRIDGE PATTERN!
 	public:
-		SearchEngine(Database *in_database): database(in_database){}
+		SearchEngine(Database *in_database): database(in_database){} //Users are responsible for freeing the database!
 
 		vector<Post> searchAllPostsOfUser(string userID, Filter<Post> *filter){
 			vector<Post> postList = database->getHisPostList(userID);

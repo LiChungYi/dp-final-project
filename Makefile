@@ -1,4 +1,4 @@
-all:	main_FB main_TW main_dumpFriendToFile
+all:	main_FB main_TW main_dumpFriendToFile main_searchEngine
 
 main_FB:	 allLibrary main_FB.cpp
 	g++ -Wall -O3 main_FB.cpp json.o Adapter.o -o main_FB
@@ -6,6 +6,10 @@ main_TW: 	 allLibrary main_TW.cpp
 	g++ -Wall -O3 main_TW.cpp json.o Adapter.o -o main_TW
 main_dumpFriendToFile: allLibrary main_dumpFriendToFile.cpp
 	g++ -Wall -O3 main_dumpFriendToFile.cpp json.o Adapter.o -o main_dumpFriendToFile
+
+main_searchEngine: allLibrary main_searchEngine.cpp
+	g++ -Wall -O3 main_searchEngine.cpp json.o Adapter.o -o main_searchEngine
+
 
 allLibrary: json.o Adapter.o json/json.h Adapter.hpp Database.hpp Data.hpp SearchEngine.hpp Filter.hpp 
 
