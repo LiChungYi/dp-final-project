@@ -23,8 +23,8 @@ int main(int argc, char* argv[]){
 	
 	char outputFileName[LINE_SIZE];
 	input.getline(outputFileName, LINE_SIZE);
-	ofstream output(outputFileName);
-
+	cout<<outputFileName<<endl;
+	ofstream output(outputFileName,ios_base::out|ios_base::trunc);
 
 	Database *database;
 	string DBtype;
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]){
 			string className, arg;
 			stringstream ss(line);
 			getline(ss, className, '\t');
-			getline(ss, arg, '\t');
+			getline(ss, arg);
 		
 			filterList.push_back(Filter<Post>::newFilter(className, arg)); 
 
@@ -109,8 +109,10 @@ int main(int argc, char* argv[]){
 
 
 		vector<Post> ret = searchEngine.searchAllPostsOfUser(uid, filterList.front());
-		for(unsigned i = 0; i < ret.size(); ++i)
+		cout<<ret.size()<<endl;
+		for(unsigned i = 0; i < ret.size(); ++i){
 			output << ret.at(i);
+		}
 
 	}
 	else if(dataType.compare("User")==0){
@@ -126,7 +128,7 @@ int main(int argc, char* argv[]){
 			string className, arg;
 			stringstream ss(line);
 			getline(ss, className, '\t');
-			getline(ss, arg, '\t');
+			getline(ss, arg);
 		
 			filterList.push_back(Filter<User>::newFilter(className, arg)); 
 

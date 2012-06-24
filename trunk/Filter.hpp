@@ -76,6 +76,9 @@ class PostTimeFilter:public Filter<Post>{
 //		static PostTimeFilter dummy;
 		PostTimeFilter(string in_fromTime, string in_toTime):fromTime(in_fromTime), toTime(in_toTime){}
 		virtual bool shouldKeep(Post p){
+			//cout<<fromTime<<endl;
+			//cout<<toTime<<endl;
+			//cout<<p.createdTime<<endl;
 			if(fromTime.compare(p.createdTime) <= 0 && p.createdTime.compare(toTime) <= 0 )
 				return true;
 			return false;
@@ -84,6 +87,7 @@ class PostTimeFilter:public Filter<Post>{
 		PostTimeFilter():Filter<Post>("PostTimeFilter"){
 		}
 		Filter<Post>* Clone(string s){
+			cerr<<"[[["<<s<<endl;
 			stringstream ss(s);
 			string tmp1, tmp2;
 			getline(ss,tmp1,'\t');
