@@ -33,6 +33,9 @@ int main(int argc, char* argv[]){
 	}
 	else
 		assert(0);
+	char c;
+	c = cin.get();
+	assert(c == '\n');
 
 	SearchEngine searchEngine(database);
 	string dataType;
@@ -40,11 +43,13 @@ int main(int argc, char* argv[]){
 	if(dataType.compare("Post")==0){
 		string uid;
 		input >> uid;
+
+		c = cin.get();//so we can do get line later
+		assert(c == '\n');
+
+
 		string line;
 		getline(input, line);
-		cout<<"1"<<line<<endl;
-		getline(input, line);
-		cout<<"2"<<line<<endl;
 		Filter<Post> *fa;
 		{
 			string tmp;
@@ -81,6 +86,8 @@ int main(int argc, char* argv[]){
 	}
 	else if(dataType.compare("User")==0){
 //		Filter<User> *filter;
+		c = cin.get();//so we can do get line later
+		assert(c == '\n');
 		assert(0);
 		
 	}
