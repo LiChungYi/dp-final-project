@@ -42,8 +42,10 @@ class SearchEngine{
 
 
 		//may be deleted, here just a simple testing method
-		vector<User> searchAllMyFriendsByRelationshipStatus(string status){
-			Filter<User> *f = new UserRelationshipStatusFilter(status);
+		vector<User> searchAllMyFriendsByRelationshipStatus(string status, string gender){
+			Filter<User> *f1 = new UserRelationshipStatusFilter(status);
+			Filter<User> *f2 = new UserGenderFilter(gender);
+			Filter<User> *f = new AndFilter<User>(f1, f2);
 			return searchAllMyFriends(f);
 		}
 };
