@@ -1,3 +1,8 @@
+/*
+ *	testing twitter functionality, not used in the end
+ *
+ * */
+
 #include<iostream>
 #include<fstream>
 

@@ -21,5 +21,6 @@ int main(int argc, char* argv[]){
 	else
 		assert(0);
 	d->dumpMyFriendData(outFile);
+	delete d;
 	return 0;
 }
