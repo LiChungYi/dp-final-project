@@ -2,7 +2,7 @@
 #define FILTER_HPP
 
 
-#include "Post.hpp"
+#include "Data.hpp"
 
 // functional object (Command Pattern)
 

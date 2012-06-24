@@ -1,5 +1,5 @@
-#ifndef DATA_HPP
-#define DATA_HPP
+#ifndef DATABASE_HPP
+#define DATABASE_HPP
 
 #include <iostream>
 #include <sstream>
@@ -7,8 +7,7 @@
 #include <fstream>
 
 #include "Adapter.hpp"
-#include "User.hpp"
-#include "Post.hpp"
+#include "Data.hpp"
 #include "TimeParser.hpp"
 
 using namespace std;
@@ -202,7 +201,7 @@ class TwitterDatabase:public Database{
 				sprintf(cs,"%d",ID);
 				string s(cs);
 		//		getUserInfo(s);
-				outFile << s << endl;
+				outFile << s << "\t" << s <<endl;	//twitter can't get name easily so here we put id as name
 			}
 
 			outFile.close();
@@ -210,4 +209,4 @@ class TwitterDatabase:public Database{
 };
 
 
-#endif //DATA_HPP
+#endif //DATABASE_HPP

@@ -4,12 +4,12 @@
 #include "Filter.hpp"
 class SearchEngine{
 	private:
-		Database *data;	//BRIDGE PATTERN!
+		Database *database;	//BRIDGE PATTERN!
 	public:
-		SearchEngine(Database *in_data): data(in_data){}
+		SearchEngine(Database *in_database): database(in_database){}
 
 		vector<Post> searchAllPostsOfUser(string userID, Filter<Post> *filter){
-			vector<Post> postList = data->getHisPostList(userID);
+			vector<Post> postList = database->getHisPostList(userID);
 			vector<Post> result;
 			for(vector<Post>::iterator it = postList.begin(); it != postList.end(); it++){
 				if(filter->shouldKeep(*it))
@@ -28,10 +28,10 @@ class SearchEngine{
 
 
 		vector<User> searchAllMyFriends(Filter<User> *filter){
-			vector<string> userIDList = data->getMyFriendIDList();
+			vector<string> userIDList = database->getMyFriendIDList();
 			vector<User> result;
 			for(vector<string>::iterator it = userIDList.begin(); it != userIDList.end(); it++){
-				User u = data->getUserInfo(*it);
+				User u = database->getUserInfo(*it);
 				if(filter->shouldKeep(u)){
 					result.push_back(u);
 					cout << u;

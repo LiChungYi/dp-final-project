@@ -4,8 +4,6 @@
 
 #include"Adapter.hpp"
 #include"Database.hpp"
-#include"User.hpp"
-#include"Post.hpp"
 
 int main(int argc, char* argv[]){
 
