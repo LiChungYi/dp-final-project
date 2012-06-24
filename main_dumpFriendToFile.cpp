@@ -1,6 +1,12 @@
 #include <assert.h>
 #include <string.h>
 #include "Database.hpp"
+
+/*	
+ *	a program so that php can quickly get my friend list
+ *
+ * */
+
 int main(int argc, char* argv[]){
 	string outFile("friendList.txt");
 	Database *d;
