@@ -8,15 +8,15 @@
  * */
 
 int main(int argc, char* argv[]){
-	string outFile("friendList.txt");
+	string outFile(argv[1]);
 	Database *d;
-	if(strcmp("FB", argv[1]) == 0){
-		assert(argc == 3);	
-		d = new FacebookDatabase(argv[2]);
+	if(strcmp("FB", argv[2]) == 0){
+		assert(argc == 4);	
+		d = new FacebookDatabase(argv[3]);
 	}
-	else if(strcmp("TW", argv[1]) == 0){
-		assert(argc == 4);
-		d = new TwitterDatabase(argv[2], argv[3]);
+	else if(strcmp("TW", argv[2]) == 0){
+		assert(argc == 5);
+		d = new TwitterDatabase(argv[3], argv[4]);
 	}
 	else
 		assert(0);
