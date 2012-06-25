@@ -18,6 +18,7 @@ class Database{
 		virtual User getUserInfo(string id)=0;
 		virtual vector<Post> getHisPostList(string id)=0;
 		virtual void dumpMyFriendData(string fileName) = 0;
+		virtual string getProfilePicture(string userID) = 0;
 	
 };
 
@@ -49,6 +50,12 @@ class FacebookDatabase:public Database{
 			return theJson["id"].asString();
 		}
 
+		string getProfilePicture(string userID){
+			Json::Value theJson;
+			faceboookAdapter.getMyJson("fields=picture", theJson);
+			return theJson["picture"].asString();
+		}
+
 		vector<string> getMyFriendIDList(){
 			Json::Value theJson;
 			faceboookAdapter.getMyJson("friends", theJson);
@@ -78,6 +85,7 @@ class FacebookDatabase:public Database{
 			user.relationshipStatus = theJson["relationship_status"].asString();
 			user.birthday = theJson["birthday"].asString();
 			user.location = theJson["location"]["name"].asString();
+			user.pictureUrl = getProfilePicture(userID);
 			return user;
 		}
 
@@ -168,6 +176,7 @@ class TwitterDatabase:public Database{
 			Json::Value theJson;
 			twitterAdapter.getHisJson("users/show", id, theJson);
 			User u(theJson["name"].asString(),id,"",theJson["lang"].asString(),"","",theJson["location"].asString());
+			u.pictureUrl = getProfilePicture(id);
 
 		//	cout<<u<<endl;
 			return u;
@@ -205,6 +214,11 @@ class TwitterDatabase:public Database{
 			}
 
 			outFile.close();
+		}
+		
+		
+		string getProfilePicture(string userID){
+			return "";
 		}
 };
 
