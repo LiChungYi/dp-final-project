@@ -19,8 +19,9 @@ class User:public Data{
 		string relationshipStatus;
 		string birthday;
 		string location;
-		User(string name = "", string id = "", string gen = "", string lan = "", string rela = "", string birth = "", string loc = ""):
-		userName(name),ID(id),gender(gen),language(lan),relationshipStatus(rela),birthday(birth),location(loc){}
+		string pictureUrl;
+		User(string name = "", string id = "", string gen = "", string lan = "", string rela = "", string birth = "", string loc = "", string picU = ""):
+		userName(name),ID(id),gender(gen),language(lan),relationshipStatus(rela),birthday(birth),location(loc), pictureUrl(picU){}
 		friend ostream& operator<<(ostream&, const User&);
 
 };
