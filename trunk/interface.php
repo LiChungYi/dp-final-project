@@ -1,5 +1,6 @@
 <?
 header("Content-Type:text/html; charset=utf-8");
+echo '<body bgcolor=#B03060>'; 
 echo '<img src="https://graph.facebook.com/starrywinter/picture"/><br>';
 
 
@@ -50,7 +51,7 @@ echo '
 <li>Search</li>
 
 	<form name="input" action="./interface.php" method="get">
-	<input type="text" name="query" value="MLB"/>
+	<input type="text" name="query" value="生日"/>
 
 	'.$friends_select.'From:'.$from_year_select.'
 
@@ -75,11 +76,30 @@ echo '
 	<input type="hidden" name="type" value="Post" />
 	<input type="submit" value="Submit" />
 	</form> 
-	<hr/>
 
-<li> User Search</li><hr/>
+<hr/>
+<li> User Search</li>
+	<form name="input" action="./interface.php" method="get">
+	
+	<select name="Status">
+	<option value="In a relationship">In a relationship</option>
+	<option value="It\'s complicated">It\'s complicated</option>
+	<option value="Single">Single</option>
+	<option value="Married">Married</option>
+	</select> 
+	<select name="Gender">
+	<option value="male">male</option>
+	<option value="female">female</option>
+	</select> 
+	
+	<input type="hidden" name="functionId" value="2" />
+	<input type="hidden" name="socialNetwork" value="'.$socialNetwork.'" />
+	<input type="hidden" name="type" value="User" />
+	<input type="submit" value="Submit" />
+	</form> 
+<hr/>
 
-<li> function 4</li><hr/>
+<li> You can buil any customized search engine</li><hr/>
 
 </ul>
 '
@@ -100,9 +120,11 @@ if($functionId > 0){
 			//$accessToken ;
 			//$accessTokenSecret ;
 			$input_file_name = $type.$query.$uid.$from_time.$to_time.$socialNetwork.$accessToken.$accessTokenSecret;
-			$output_file_name = $input_file_name."_output";
+			$output_file_name = $input_file_name."_output.html";
+			$input_file_name = str_replace(" ","_",$input_file_name);
+			$output_file_name = str_replace(" ","_",$output_file_name);
 			
-			if(file_exists($output_file_name)==false || true){//!!!!!!!!!!
+			if(file_exists($output_file_name)==false ){//!!!!!!!!!!
 
 				if(strcmp($socialNetwork,"TW")==0){
 					$cmd =  $output_file_name."\n".
@@ -119,19 +141,45 @@ if($functionId > 0){
 						"and"."\n".
 						"PostTimeFilter\t".$from_time."\t".$to_time."\n";
 				}
-				echo $cmd;	
 				file_put_contents($input_file_name,$cmd);
 				system('./main_searchEngine '.$input_file_name);
-				echo 'done';
 			}
 				
 			break;
 		case 2:
+			$status = $_GET['Status'];
+			$Gender = $_GET['Gender'];
+			$input_file_name = $type.$status.$Gender.$socialNetwork.$accessToken.$accessTokenSecret;
+			$output_file_name = $input_file_name."_output.html";
+			$input_file_name = str_replace(" ","_",$input_file_name);
+			$output_file_name = str_replace(" ","_",$output_file_name);
+			if(file_exists($output_file_name)==false ){//!!!!!!!!!!
+
+				if(strcmp($socialNetwork,"TW")==0){
+					$cmd =  $output_file_name."\n".
+						$socialNetwork."\t".$accessToken."\t".$accessTokenSecret."\n".
+						$type."\n".
+						"UserStatusRelationshiopFilter\t".$status."\n".
+						"and"."\n".
+						"UserGenderFilter\t".$Gender."\n";
+				}else{	
+					$cmd =  $output_file_name."\n".
+						$socialNetwork."\t".$accessToken."\n".
+						$type."\n".
+						"UserRelationshipStatusFilter\t".$status."\n".
+						"and"."\n".
+						"UserGenderFilter\t".$Gender."\n";
+				}
+				file_put_contents($input_file_name,$cmd);
+				system('./main_searchEngine '.$input_file_name);
+			}
+
 			break;
 	}
+	echo "<script>window.open('".$output_file_name."','','width=750,height=450');</script>";
 }
 
-//$last_line = system('ls', $retval);
+echo '</body>'; 
 
 
 

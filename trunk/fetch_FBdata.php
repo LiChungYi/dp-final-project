@@ -16,7 +16,9 @@ $outputFile=$argv[4];
 
 
 $url = "https://graph.facebook.com/". $person ."/".$object."?access_token=" . $access_token . "&limit=10000";
-$json = file_get_contents($url);
+while(($json = file_get_contents($url))==false){
+
+}
 //$decoded_json =  json_decode($json);
 //print_r($decoded_json);
 $fp = fopen($outputFile,"w");

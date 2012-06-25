@@ -16,7 +16,7 @@ if(strcmp($object,"friend")==0)
 $app_id =  '346899418712471';
 $app_secret =  'de58ce8f0e3ca5b288a219b72322ba9f';
 $my_url = "http://mslab.csie.ntu.edu.tw/~chungyi/DP/dp-final-project/facebook/example.php?object=".$object;
-$scope = "read_friendlists,read_stream,user_status";
+$scope = "read_friendlists,read_stream,user_status,friends_status,publish_stream,user_birthday,friends_birthday,friends_education_history,user_education_history,friends_location,user_location,friends_relationships,user_relationships,user_online_presence,friends_online_presence";
 
 session_start();
 $code = $_REQUEST["code"];
