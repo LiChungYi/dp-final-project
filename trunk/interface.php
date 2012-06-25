@@ -112,7 +112,8 @@ if($functionId > 0){
 			//system('./main '.$token, $returnval);
 			
 			$type = $_GET['type'];
-			$query = $_GET['query'];
+			$query = trim($_GET['query']);
+
 			$uid = $_GET['uid']; //type ==POST
 			$from_time = $_GET['fromYear']."-".$_GET['fromMonth']."-00";
 			$to_time = $_GET['toYear']."-".$_GET['toMonth']."-99";
@@ -123,28 +124,44 @@ if($functionId > 0){
 			$output_file_name = $input_file_name."_output.html";
 			$input_file_name = str_replace(" ","_",$input_file_name);
 			$output_file_name = str_replace(" ","_",$output_file_name);
-			
+
+			$query_cmd = "PostTimeFilter\t".$from_time."\t".$to_time."\n";
+			$and_query = explode("AND",$query);
+			for($i=0;$i<count($and_query);$i++){
+				if(strlen(trim($and_query[$i]))==0)
+					continue;
+				$query_cmd = $query_cmd."and\n";
+				$or_query = explode("OR",$and_query[$i]);	
+				$or_first = 0;
+				for($j=0;$j<count($or_query);$j++){
+					if(strlen(trim($or_query[$j]))==0)
+						continue;
+					if($or_first==0){
+						$or_first++;
+						$query_cmd = $query_cmd."PostContentFilter\t".trim($or_query[$j])."\n";
+					}
+					else{
+						$query_cmd = $query_cmd."or\nPostContentFilter\t".trim($or_query[$j])."\n"."and\nPostTimeFilter\t".$from_time."\t".$to_time."\n";
+					}
+				}
+			}
+			echo $query_cmd;
 			if(file_exists($output_file_name)==false ){//!!!!!!!!!!
 
 				if(strcmp($socialNetwork,"TW")==0){
 					$cmd =  $output_file_name."\n".
 						$socialNetwork."\t".$accessToken."\t".$accessTokenSecret."\n".
 						$type."\t".$uid."\n".
-						"PostContentFilter\t".$query."\n".
-						"and"."\n".
-						"PostTimeFilter\t".$from_time."\t".$to_time."\n";
+						$query_cmd;
 				}else{	
 					$cmd =  $output_file_name."\n".
 						$socialNetwork."\t".$accessToken."\n".
 						$type."\t".$uid."\n".
-						"PostContentFilter\t".$query."\n".
-						"and"."\n".
-						"PostTimeFilter\t".$from_time."\t".$to_time."\n";
+						$query_cmd;
 				}
 				file_put_contents($input_file_name,$cmd);
 				system('./main_searchEngine '.$input_file_name);
 			}
-				
 			break;
 		case 2:
 			$status = $_GET['Status'];
