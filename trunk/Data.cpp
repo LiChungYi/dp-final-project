@@ -2,7 +2,7 @@
 
 ostream& operator<<(ostream& os, const User& u){
 	os<<"<hr/><ul>"<<endl;
-	os<<"<img src=\"" << u.pictureUrl << "\">"
+	os<<"<img src=\"" << u.pictureUrl << "\">";
 	os<<"<li>userName : "<<u.userName<<endl;
 	os<<"<li>ID : "<<u.ID<<endl;
 	os<<"<li>gender : "<<u.gender<<endl;

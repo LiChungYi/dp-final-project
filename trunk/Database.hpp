@@ -51,9 +51,7 @@ class FacebookDatabase:public Database{
 		}
 
 		string getProfilePicture(string userID){
-			Json::Value theJson;
-			faceboookAdapter.getMyJson("fields=picture", theJson);
-			return theJson["picture"].asString();
+			return "https://graph.facebook.com/" + userID + "/picture/";
 		}
 
 		vector<string> getMyFriendIDList(){

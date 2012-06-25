@@ -171,9 +171,11 @@ int main(int argc, char* argv[]){
 		assert(filterList.size() == 1);
 
 
+		output<< "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>";
 		vector<User> ret = searchEngine.searchAllMyFriends(filterList.front());
 		for(unsigned i = 0; i < ret.size(); ++i)
 			output << ret.at(i);
+		output<<"</html>";
 	}
 	else
 		assert(0);

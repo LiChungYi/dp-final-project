@@ -1,7 +1,9 @@
 <?
 header("Content-Type:text/html; charset=utf-8");
-echo '<body bgcolor=#B03060>'; 
-echo '<img src="https://graph.facebook.com/starrywinter/picture"/><br>';
+//echo '<body bgcolor=#B03060>'; 
+echo '<body bgcolor=#000000>'; 
+//echo '<img src="https://graph.facebook.com/starrywinter/picture"/>';
+echo "<font size='10' color='#00EE00' >Design Pattern Social Search</font>";
 
 
 if($_GET['functionId']==NULL)
@@ -42,13 +44,12 @@ for($i=2012;$i>1900;$i--){
 $from_year_select = $from_year_select.'</select>';
 $to_year_select = $to_year_select.'</select>';
 
-echo "<hr/>Tools";
+//echo "<hr/><font color='#fffff'>Tools</font>";
 echo '
 </hr>
 <ul>
-<li>Get Frined List</a></li><hr/>
 
-<li>Search</li>
+<li><font color="#FFFFFF">Post Search</font></li>
 
 	<form name="input" action="./interface.php" method="get">
 	<input type="text" name="query" value="生日"/>
@@ -78,7 +79,7 @@ echo '
 	</form> 
 
 <hr/>
-<li> User Search</li>
+<li><font color="#FFFFFF">Find Your Guy/Girl</font></li>
 	<form name="input" action="./interface.php" method="get">
 	
 	<select name="Status">
@@ -99,7 +100,6 @@ echo '
 	</form> 
 <hr/>
 
-<li> You can buil any customized search engine</li><hr/>
 
 </ul>
 '
