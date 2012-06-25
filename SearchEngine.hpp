@@ -35,7 +35,6 @@ class SearchEngine{
 				User u = database->getUserInfo(*it);
 				if(filter->shouldKeep(u)){
 					result.push_back(u);
-					cout << u;
 				}
 			}
 			return result;

@@ -4,7 +4,7 @@ main_dumpFriendToFile: allLibrary main_dumpFriendToFile.cpp Data.cpp
 	g++ -Wall -O3 main_dumpFriendToFile.cpp Data.cpp json.o Adapter.o -o main_dumpFriendToFile
 
 main_searchEngine: allLibrary main_searchEngine.cpp Data.cpp
-	g++ -Wall  main_searchEngine.cpp Data.cpp json.o Adapter.o -o main_searchEngine
+	g++ -Wall -g  main_searchEngine.cpp Data.cpp json.o Adapter.o -o main_searchEngine
 
 
 allLibrary: json.o Adapter.o json/json.h Adapter.hpp Database.hpp Data.hpp SearchEngine.hpp Filter.hpp 

@@ -23,7 +23,6 @@ int main(int argc, char* argv[]){
 	
 	char outputFileName[LINE_SIZE];
 	input.getline(outputFileName, LINE_SIZE);
-	cout<<outputFileName<<endl;
 	ofstream output(outputFileName,ios_base::out|ios_base::trunc);
 
 	Database *database;
@@ -109,10 +108,11 @@ int main(int argc, char* argv[]){
 
 
 		vector<Post> ret = searchEngine.searchAllPostsOfUser(uid, filterList.front());
-		cout<<ret.size()<<endl;
+		output<< "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>";
 		for(unsigned i = 0; i < ret.size(); ++i){
 			output << ret.at(i);
 		}
+		output<<"</html>\n";
 
 	}
 	else if(dataType.compare("User")==0){
