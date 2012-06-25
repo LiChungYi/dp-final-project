@@ -3,7 +3,8 @@ header("Content-Type:text/html; charset=utf-8");
 //echo '<body bgcolor=#B03060>'; 
 echo '<body bgcolor=#000000>'; 
 //echo '<img src="https://graph.facebook.com/starrywinter/picture"/>';
-echo "<font size='10' color='#00EE00' >Design Pattern Social Search</font>";
+echo "<font size='10' color='#EE1100'  ><i>Design Pattern Social Search</i></font><nobr>";
+echo '&nbsp&nbsp&nbsp<a href="./index.html"><img src="./Home.png" width="50" height="50"></a>"';
 
 
 if($_GET['functionId']==NULL)
@@ -54,7 +55,8 @@ echo '
 	<form name="input" action="./interface.php" method="get">
 	<input type="text" name="query" value="生日"/>
 
-	'.$friends_select.'From:'.$from_year_select.'
+	<font color=#FFFFFF>User:</font>
+	'.$friends_select.'<font color=#FFFFFF>From:</font>'.$from_year_select.'
 
 
 	<select name="fromMonth">
@@ -62,7 +64,7 @@ echo '
 	<option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option>
 	<option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option>
 	<option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-	</select> - To:
+	</select> <font color=#FFFFFF>- To:</font>
 
 	'.$to_year_select.'
 	<select name="toMonth">
@@ -124,6 +126,8 @@ if($functionId > 0){
 			$output_file_name = $input_file_name."_output.html";
 			$input_file_name = str_replace(" ","_",$input_file_name);
 			$output_file_name = str_replace(" ","_",$output_file_name);
+			$input_file_name = str_replace("'","_",$input_file_name);
+			$output_file_name = str_replace("'","_",$output_file_name);
 
 			$query_cmd = "PostTimeFilter\t".$from_time."\t".$to_time."\n";
 			$and_query = explode("AND",$query);
@@ -170,6 +174,8 @@ if($functionId > 0){
 			$output_file_name = $input_file_name."_output.html";
 			$input_file_name = str_replace(" ","_",$input_file_name);
 			$output_file_name = str_replace(" ","_",$output_file_name);
+			$input_file_name = str_replace("'","_",$input_file_name);
+			$output_file_name = str_replace("'","_",$output_file_name);
 			if(file_exists($output_file_name)==false ){//!!!!!!!!!!
 
 				if(strcmp($socialNetwork,"TW")==0){
